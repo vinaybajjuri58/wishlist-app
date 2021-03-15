@@ -1,3 +1,46 @@
+import { useWish } from "../Context";
+
 export const WishList = () => {
-  return <h2>WishList</h2>;
+  const { wishProducts } = useWish();
+  return (
+    <div className="products-list">
+      {wishProducts.length > 0 ? (
+        wishProducts.map((item) => <Product key={item.id} product={item} />)
+      ) : (
+        <h2>No items in WishList</h2>
+      )}
+    </div>
+  );
+};
+
+const Product = ({ product }) => {
+  const { removeFromWish, increaseItem, removeOneItem } = useWish();
+  return (
+    <div className="wish-product">
+      <div className="card">
+        <img src={product.url} alt="" className="card-img" />
+        <h4 className="card-title">{product.brandName}</h4>
+        <p className="card-text">{product.description}</p>
+        <p className="card-text">{product.count}</p>
+        <button
+          onClick={() => {
+            removeFromWish(product.id);
+          }}
+          className="remove-button"
+        >
+          X
+        </button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <button onClick={() => increaseItem(product.id)}>+</button>
+          <button onClick={() => removeOneItem(product.id)}>-</button>
+        </div>
+      </div>
+    </div>
+  );
 };

@@ -1,3 +1,33 @@
+import { useWish } from "../Context";
+
 export const Products = () => {
-  return <h2>Products</h2>;
+  const { products } = useWish();
+  return (
+    <div className="products-list">
+      {products.map((item) => (
+        <Product key={item.id} product={item} />
+      ))}
+    </div>
+  );
+};
+
+const Product = ({ product }) => {
+  const { addToWish } = useWish();
+  return (
+    <div className="product">
+      <div className="card">
+        <img src={product.url} alt="" className="card-img" />
+        <h4 className="card-title">{product.brandName}</h4>
+        <p className="card-text">{product.description}</p>
+        <button
+          onClick={() => {
+            addToWish(product.id);
+          }}
+          className="wish-button"
+        >
+          WISHLIST
+        </button>
+      </div>
+    </div>
+  );
 };

@@ -8,17 +8,18 @@ import "./App.css";
 function App() {
   const [route, setRoute] = useState("products");
   const { wishProducts } = useWish();
-  {
-    console.log(useWish());
-  }
   return (
     <div>
       <div className="navigation">
-        <button onClick={() => setRoute("products")}>Home</button>
-        <span style={{ fontSize: "1.5rem" }}>
+        <button className="logo" onClick={() => setRoute("products")}>
+          Home
+        </button>
+        <div className="wishlist-icon">
           <i onClick={() => setRoute("wishlist")} class="far fa-heart"></i>
-          <p>{wishProducts.length === 0 ? "" : wishProducts.length}</p>
-        </span>
+          <span className="wishlist-count">
+            {wishProducts.length === 0 ? "" : wishProducts.length}
+          </span>
+        </div>
       </div>
       {route === "products" && <Products />}
       {route === "wishlist" && <WishList />}

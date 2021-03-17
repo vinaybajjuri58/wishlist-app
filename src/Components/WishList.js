@@ -18,6 +18,7 @@ const Product = ({ product }) => {
     removeFromWish,
     increaseItem,
     removeOneItem,
+    addToCart,
     setToast,
     setToastMessage,
   } = useWish();
@@ -37,6 +38,15 @@ const Product = ({ product }) => {
           className="remove-button"
         >
           X
+        </button>
+        <button
+          onClick={() => {
+            setToast("true");
+            setToastMessage(`${product.brandName} is added to Cart`);
+            addToCart(product.id);
+          }}
+        >
+          Move To Cart
         </button>
         <div
           style={{

@@ -47,6 +47,7 @@ export const WishProvider = ({ children }) => {
     },
   ]);
   const [wishProducts, setWishProducts] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   useEffect(() => {
@@ -86,6 +87,35 @@ export const WishProvider = ({ children }) => {
     setWishProducts(cartItems);
   };
 
+  const addToCart = (idFromCartClick) => {
+    const productIndex = products.findIndex(
+      (product) => product.id === idFromCartClick
+    );
+    const foundInCart = cartProducts.findIndex(
+      (product) => product.id === idFromCartClick
+    );
+    if (foundInCart === -1) {
+      setCartProducts((cartProducts) => [
+        ...cartProducts,
+        { ...products[productIndex], count: 1 },
+      ]);
+    } else {
+      let allItems = [...cartProducts];
+      const index = allItems.findIndex((item) => item.id === idFromCartClick);
+      allItems[index].count += 1;
+      const cartItems = allItems.filter((item) => item.count > 0);
+      setCartProducts(cartItems);
+    }
+  };
+  const removeFromCart = (idFromRemoveCart) => {
+    let allItems = [...cartProducts];
+    let index = allItems.findIndex((item) => item.id === idFromRemoveCart);
+    allItems[index].count = 0;
+
+    let cartItems = allItems.filter((item) => item.count > 0);
+    setCartProducts(cartItems);
+  };
+
   const increaseItem = (id) => {
     let allItems = [...wishProducts];
     const index = allItems.findIndex((item) => item.id === id);
@@ -115,6 +145,9 @@ export const WishProvider = ({ children }) => {
         setToast,
         toastMessage,
         setToastMessage,
+        cartProducts,
+        addToCart,
+        removeFromCart,
       }}
     >
       {children}

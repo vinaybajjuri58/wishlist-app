@@ -12,7 +12,7 @@ export const Products = () => {
 };
 
 const Product = ({ product }) => {
-  const { addToWish } = useWish();
+  const { addToWish, setToast, setToastMessage } = useWish();
   return (
     <div className="product">
       <div className="card">
@@ -21,6 +21,8 @@ const Product = ({ product }) => {
         <p className="card-text">{product.description}</p>
         <button
           onClick={() => {
+            setToast("true");
+            setToastMessage(`${product.brandName} is added to wishlist`);
             addToWish(product.id);
           }}
           className="wish-button"

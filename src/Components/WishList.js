@@ -14,7 +14,13 @@ export const WishList = () => {
 };
 
 const Product = ({ product }) => {
-  const { removeFromWish, increaseItem, removeOneItem } = useWish();
+  const {
+    removeFromWish,
+    increaseItem,
+    removeOneItem,
+    setToast,
+    setToastMessage,
+  } = useWish();
   return (
     <div className="wish-product">
       <div className="card">
@@ -24,6 +30,8 @@ const Product = ({ product }) => {
         <p className="card-text">{product.count}</p>
         <button
           onClick={() => {
+            setToast("true");
+            setToastMessage(`${product.brandName} removed from`);
             removeFromWish(product.id);
           }}
           className="remove-button"

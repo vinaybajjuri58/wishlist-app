@@ -1,5 +1,5 @@
 import { WishContext } from "./WishContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const WishProvider = ({ children }) => {
   const [products] = useState([
@@ -47,7 +47,16 @@ export const WishProvider = ({ children }) => {
     },
   ]);
   const [wishProducts, setWishProducts] = useState([]);
-
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  useEffect(() => {
+    const toastTimeout = setTimeout(() => {
+      setToast(false);
+    }, 1000);
+    return () => {
+      clearTimeout(toastTimeout);
+    };
+  }, [toast]);
   const addToWish = (idFromWishClick) => {
     const productIndex = products.findIndex(
       (product) => product.id === idFromWishClick
@@ -60,6 +69,12 @@ export const WishProvider = ({ children }) => {
         ...wishProds,
         { ...products[productIndex], count: 1 },
       ]);
+    } else {
+      let allItems = [...wishProducts];
+      const index = allItems.findIndex((item) => item.id === idFromWishClick);
+      allItems[index].count += 1;
+      const wishItems = allItems.filter((item) => item.count > 0);
+      setWishProducts(wishItems);
     }
   };
   const removeFromWish = (idFromRemoveClick) => {
@@ -96,6 +111,10 @@ export const WishProvider = ({ children }) => {
         removeFromWish,
         increaseItem,
         removeOneItem,
+        toast,
+        setToast,
+        toastMessage,
+        setToastMessage,
       }}
     >
       {children}

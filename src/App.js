@@ -1,16 +1,16 @@
 // import logo from "./logo.svg";
 
 import { useState } from "react";
-import { WishList, Products } from "./Components";
+import { WishList, Products, Toast } from "./Components";
 import { useWish } from "./Context";
 import "./App.css";
 
 function App() {
   const [route, setRoute] = useState("products");
-  const { wishProducts } = useWish();
+  const { wishProducts, toast } = useWish();
   return (
     <div>
-      <div className="navigation">
+      <nav className="navigation">
         <button className="logo" onClick={() => setRoute("products")}>
           Home
         </button>
@@ -20,9 +20,10 @@ function App() {
             {wishProducts.length === 0 ? "" : wishProducts.length}
           </span>
         </div>
-      </div>
+      </nav>
       {route === "products" && <Products />}
       {route === "wishlist" && <WishList />}
+      {toast ? <Toast /> : <></>}
     </div>
   );
 }

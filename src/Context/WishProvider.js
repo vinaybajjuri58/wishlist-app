@@ -87,6 +87,34 @@ export const WishProvider = ({ children }) => {
     setWishProducts(cartItems);
   };
 
+  const moveToCart = (idFromWish, countFromWish = 1) => {
+    const productIndex = products.findIndex(
+      (product) => product.id === idFromWish
+    );
+    // const productIndexInWish = wishProducts.findIndex(
+    //   (product) => product.id === idFromWish
+    // );
+    const foundInCart = cartProducts.findIndex(
+      (product) => product.id === idFromWish
+    );
+    if (foundInCart === -1) {
+      setCartProducts((cartProducts) => [
+        ...cartProducts,
+        {
+          ...products[productIndex],
+          count: countFromWish,
+        },
+      ]);
+    } else {
+      let allItems = [...cartProducts];
+      const index = allItems.findIndex((item) => item.id === idFromWish);
+      allItems[index].count += 1;
+      const cartItems = allItems.filter((item) => item.count > 0);
+      setCartProducts(cartItems);
+    }
+    removeFromWish(idFromWish);
+  };
+
   const addToCart = (idFromCartClick) => {
     const productIndex = products.findIndex(
       (product) => product.id === idFromCartClick
@@ -148,6 +176,7 @@ export const WishProvider = ({ children }) => {
         cartProducts,
         addToCart,
         removeFromCart,
+        moveToCart,
       }}
     >
       {children}

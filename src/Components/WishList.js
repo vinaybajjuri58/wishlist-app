@@ -18,7 +18,7 @@ const Product = ({ product }) => {
     removeFromWish,
     increaseItem,
     removeOneItem,
-    addToCart,
+    moveToCart,
     setToast,
     setToastMessage,
   } = useWish();
@@ -43,7 +43,7 @@ const Product = ({ product }) => {
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} is added to Cart`);
-            addToCart(product.id);
+            moveToCart(product.id, product.count);
           }}
         >
           Move To Cart

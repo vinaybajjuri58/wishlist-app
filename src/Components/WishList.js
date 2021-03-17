@@ -31,7 +31,7 @@ const Product = ({ product }) => {
         <button
           onClick={() => {
             setToast("true");
-            setToastMessage(`${product.brandName} removed from`);
+            setToastMessage(`${product.brandName} removed from wish list`);
             removeFromWish(product.id);
           }}
           className="remove-button"

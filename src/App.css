@@ -78,6 +78,12 @@ nav{
     justify-content: center;
     align-items: center;
   }
+  .wish-product{
+    --remove-button :block;
+  }
+  .product{
+    --will-display:block;
+  }
 }
 
 

@@ -1,7 +1,11 @@
 import { useWish } from "../Context";
+import { useEffect } from "react";
 
 export const WishList = () => {
   const { wishProducts } = useWish();
+  useEffect(() => {
+    document.title = "Wish List";
+  }, []);
   return (
     <div className="products-list">
       {wishProducts.length > 0 ? (

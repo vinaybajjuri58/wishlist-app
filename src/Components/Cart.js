@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useWish } from "../Context";
 export const Cart = () => {
   const { cartProducts } = useWish();
+  useEffect(() => {
+    document.title = "Cart";
+  }, []);
   return (
     <div>
       {cartProducts.length > 0 ? (

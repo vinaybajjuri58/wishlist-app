@@ -1,105 +1,105 @@
-
-
-:root{
-  --will-display : none;
-  --remove-button:none;
+:root {
+  --will-display: none;
+  --remove-button: none;
 }
-.logo{
-  border:none;
+.logo {
+  border: none;
   background-color: inherit;
   font-size: 2rem;
   margin-left: 1rem;
 }
-nav{
+nav {
   height: 5rem;
   background-color: lightblue;
   margin-bottom: 1rem;
 }
-.icons{
+.icons {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.wishlist-icon{
+.wishlist-icon {
   display: flex;
   font-size: 2rem;
   margin-right: 3rem;
   position: relative;
 }
-.wishlist-count{
+.wishlist-count {
   position: absolute;
   font-size: 1rem;
   left: 2rem;
 }
-.cart-icon{
+.cart-icon {
   display: flex;
   font-size: 2rem;
   margin-right: 3rem;
   position: relative;
 }
-.cart-count{
+.cart-count {
   position: absolute;
   font-size: 1rem;
   left: 2.5rem;
 }
 
-
-.navigation{
+.navigation {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.products-list{
+.products-list {
   display: flex;
   flex-basis: 350px;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  margin:  0 auto;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  margin: 0 auto;
 }
-.product{
+.product {
+  position: relative;
+  margin: 0.5rem;
+}
+.product:hover {
+  --will-display: block;
+}
+.wish-product {
   position: relative;
 }
-.product:hover{
-  --will-display:block;
-}
-.wish-product{
-  position: relative;
-}
-.wish-product:hover{
-  --remove-button :block;
+.wish-product:hover {
+  --remove-button: block;
 }
 
-
-.wish-button{
+.wish-button {
   display: var(--will-display);
   position: absolute;
   width: 100%;
   background-color: white;
   height: 2rem;
-  top:370px;
+  top: 275px;
 }
-.remove-button{
+.remove-button {
   display: var(--remove-button);
   position: absolute;
   right: 0.25rem;
-  top:0.25rem;
+  top: 0.25rem;
   border-radius: 50%;
 }
 
+/* .cart-section {
+  display: flex;
+  flex-direction: column;
+} */
+
 @media only screen and (max-width: 768px) {
-  .products-list{
+  .products-list {
     justify-content: center;
     align-items: center;
   }
-  .wish-product{
-    --remove-button :block;
+  .wish-product {
+    --remove-button: block;
   }
-  .product{
-    --will-display:block;
+  .product {
+    --will-display: block;
   }
 }
-
-

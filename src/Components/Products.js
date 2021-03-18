@@ -3,10 +3,12 @@ import { useWish } from "../Context";
 export const Products = () => {
   const { products } = useWish();
   return (
-    <div className="products-list">
-      {products.map((item) => (
-        <Product key={item.id} product={item} />
-      ))}
+    <div>
+      <ul className="products-list">
+        {products.map((item) => (
+          <Product key={item.id} product={item} />
+        ))}
+      </ul>
     </div>
   );
 };
@@ -15,10 +17,11 @@ const Product = ({ product }) => {
   const { addToWish, setToast, setToastMessage } = useWish();
   return (
     <div className="product">
-      <div className="card">
+      <div className="card card-shopping">
         <img src={product.url} alt="" className="card-img" />
-        <h4 className="card-title">{product.brandName}</h4>
-        <p className="card-text">{product.description}</p>
+        <h4 className="card-brand">{product.brandName}</h4>
+        <p className="card-desc">{product.description}</p>
+        <p className="card-desc">Rs {product.price}</p>
         <button
           onClick={() => {
             setToast("true");

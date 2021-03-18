@@ -24,11 +24,12 @@ const Product = ({ product }) => {
   } = useWish();
   return (
     <div className="wish-product">
-      <div className="card">
+      <div className="card card-shopping">
         <img src={product.url} alt="" className="card-img" />
-        <h4 className="card-title">{product.brandName}</h4>
-        <p className="card-text">{product.description}</p>
-        <p className="card-text">{product.count}</p>
+        <h4 className="card-brand">{product.brandName}</h4>
+        <p className="card-desc">{product.description}</p>
+        <p className="card-desc">Count:{product.count}</p>
+        <p className="card-desc">Rs {product.price}</p>
         <button
           onClick={() => {
             setToast("true");

@@ -1,5 +1,5 @@
 import { WishContext } from "./WishContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const WishProvider = ({ children }) => {
   const [products] = useState([
@@ -56,14 +56,7 @@ export const WishProvider = ({ children }) => {
   const [cartProducts, setCartProducts] = useState([]);
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  useEffect(() => {
-    const toastTimeout = setTimeout(() => {
-      setToast(false);
-    }, 1000);
-    return () => {
-      clearTimeout(toastTimeout);
-    };
-  }, [toast]);
+
   const addToWish = (idFromWishClick) => {
     const productIndex = products.findIndex(
       (product) => product.id === idFromWishClick

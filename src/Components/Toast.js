@@ -1,6 +1,15 @@
+import { useEffect } from "react";
 import { useWish } from "../Context";
 export const Toast = () => {
-  const { setToast, toastMessage } = useWish();
+  const { toast, setToast, toastMessage } = useWish();
+  useEffect(() => {
+    const toastTimeout = setTimeout(() => {
+      setToast(false);
+    }, 1000);
+    return () => {
+      clearTimeout(toastTimeout);
+    };
+  }, [toast]);
   return (
     <div
       style={{

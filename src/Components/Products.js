@@ -12,17 +12,20 @@ export const Products = () => {
         return { ...state, fastDelivery: !state.fastDelivery };
       case "FILTER_IN_STOCK":
         return { ...state, inStock: !state.inStock };
+      case "SEARCH_TEXT":
+        return { ...state, searchText: action.payload };
       default:
         return state;
     }
   };
 
-  const [{ sortBy, fastDelivery, inStock }, dispatch] = useReducer(
+  const [{ sortBy, fastDelivery, inStock, searchText }, dispatch] = useReducer(
     dispatchFunc,
     {
       sortBy: null,
       fastDelivery: false,
       inStock: false,
+      searchText: "",
     }
   );
 
@@ -53,9 +56,22 @@ export const Products = () => {
     }
     return data;
   };
+  const searchData = (data, searchText) => {
+    if (searchText.length > 0) {
+      return data.filter((product) =>
+        product.brandName.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+    return data;
+  };
 
   const sortedData = sortData(products, sortBy);
   const filteredData = filterData(sortedData, fastDelivery, inStock);
+  const searchedData = searchData(filteredData, searchText);
+
+  const changeHandler = (event) => {
+    dispatch({ type: "SEARCH_TEXT", payload: event.target.value });
+  };
 
   return (
     <div>
@@ -103,8 +119,20 @@ export const Products = () => {
           In Stock
         </label>
       </div>
+      <div>
+        <label>
+          Search :
+          <input
+            style={{ width: "15rem" }}
+            type="text"
+            placeholder="search products with brandname"
+            value={searchText}
+            onChange={changeHandler}
+          />
+        </label>
+      </div>
       <ul className="products-list">
-        {filteredData.map((item) => (
+        {searchedData.map((item) => (
           <Product key={item.id} product={item} />
         ))}
       </ul>

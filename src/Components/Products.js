@@ -8,15 +8,23 @@ export const Products = () => {
     switch (action.type) {
       case "SORTBY":
         return { ...state, sortBy: action.payload };
-
+      case "FILTER_SPEED_DEIVERY":
+        return { ...state, fastDelivery: !state.fastDelivery };
+      case "FILTER_IN_STOCK":
+        return { ...state, inStock: !state.inStock };
       default:
         return state;
     }
   };
 
-  const [{ sortBy }, dispatch] = useReducer(dispatchFunc, {
-    sortBy: null,
-  });
+  const [{ sortBy, fastDelivery, inStock }, dispatch] = useReducer(
+    dispatchFunc,
+    {
+      sortBy: null,
+      fastDelivery: false,
+      inStock: false,
+    }
+  );
 
   const sortData = (data, sortBy) => {
     if (sortBy && sortBy === "SORT_LOW_TO_HIGH") {
@@ -31,8 +39,23 @@ export const Products = () => {
     }
     return data;
   };
+  const filterData = (data, fastDelivery) => {
+    if (fastDelivery && inStock) {
+      return data
+        .filter((product) => product.speedDelivery === fastDelivery)
+        .filter((product) => product.inStock === inStock);
+    }
+    if (fastDelivery) {
+      return data.filter((product) => product.speedDelivery === fastDelivery);
+    }
+    if (inStock) {
+      return data.filter((product) => product.inStock === inStock);
+    }
+    return data;
+  };
 
   const sortedData = sortData(products, sortBy);
+  const filteredData = filterData(sortedData, fastDelivery, inStock);
 
   return (
     <div>
@@ -60,8 +83,28 @@ export const Products = () => {
           HIGH TO LOW
         </label>
       </div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            name="Filter Delivery"
+            onChange={() => dispatch({ type: "FILTER_SPEED_DEIVERY" })}
+            checked={fastDelivery}
+          />
+          Fast Delivery
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="Filter inStock"
+            onChange={() => dispatch({ type: "FILTER_IN_STOCK" })}
+            checked={inStock}
+          />
+          In Stock
+        </label>
+      </div>
       <ul className="products-list">
-        {sortedData.map((item) => (
+        {filteredData.map((item) => (
           <Product key={item.id} product={item} />
         ))}
       </ul>

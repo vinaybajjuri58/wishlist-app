@@ -10,6 +10,8 @@ export const WishProvider = ({ children }) => {
       brandName: "Here and Now",
       description: "Black Here and Now T-Shirt",
       price: 1500,
+      speedDelivery: false,
+      inStock: false,
     },
     {
       id: 1,
@@ -18,6 +20,8 @@ export const WishProvider = ({ children }) => {
       brandName: "HRX by Hrithik",
       description: "Men Yellow Printed T-Shirt",
       price: 600,
+      speedDelivery: true,
+      inStock: true,
     },
     {
       id: 2,
@@ -26,6 +30,8 @@ export const WishProvider = ({ children }) => {
       brandName: "Roadster",
       description: "Women Maroon Solid T-shirt",
       price: 1500,
+      speedDelivery: false,
+      inStock: true,
     },
     {
       id: 3,
@@ -34,6 +40,8 @@ export const WishProvider = ({ children }) => {
       brandName: "Ether",
       description: "Pure cotton polo T-Shirt",
       price: 300,
+      speedDelivery: true,
+      inStock: false,
     },
     {
       id: 4,
@@ -42,6 +50,8 @@ export const WishProvider = ({ children }) => {
       brandName: "US Polo Assn.",
       description: "Men Navy Blue Solid Polo T-shirt",
       price: 550,
+      speedDelivery: false,
+      inStock: true,
     },
     {
       id: 5,
@@ -50,6 +60,8 @@ export const WishProvider = ({ children }) => {
       brandName: "Dillinger",
       description: "Striped Round Neck T-Shirt",
       price: 450,
+      speedDelivery: true,
+      inStock: true,
     },
   ]);
   const [wishProducts, setWishProducts] = useState([]);

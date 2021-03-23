@@ -9,7 +9,7 @@ export const Toast = () => {
     return () => {
       clearTimeout(toastTimeout);
     };
-  }, [toast]);
+  }, [toast,setToast]);
   return (
     <div
       style={{

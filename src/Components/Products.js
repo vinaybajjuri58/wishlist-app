@@ -43,18 +43,18 @@ export const Products = () => {
     return data;
   };
   const filterData = (data, fastDelivery) => {
-    if (fastDelivery && inStock) {
-      return data
-        .filter((product) => product.speedDelivery === fastDelivery)
-        .filter((product) => product.inStock === inStock);
-    }
+    let filteredData = [...data];
     if (fastDelivery) {
-      return data.filter((product) => product.speedDelivery === fastDelivery);
+      filteredData = filteredData.filter(
+        (product) => product.speedDelivery === fastDelivery
+      );
     }
     if (inStock) {
-      return data.filter((product) => product.inStock === inStock);
+      filteredData = filteredData.filter(
+        (product) => product.inStock === inStock
+      );
     }
-    return data;
+    return filteredData;
   };
   const searchData = (data, searchText) => {
     if (searchText.length > 0) {
@@ -123,7 +123,7 @@ export const Products = () => {
         <label>
           Search :
           <input
-            style={{ width: "15rem" }}
+            className="input-styled"
             type="text"
             placeholder="search products with brandname"
             value={searchText}

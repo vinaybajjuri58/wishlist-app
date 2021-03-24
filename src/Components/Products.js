@@ -1,8 +1,9 @@
 import { useReducer } from "react";
 import { useWish } from "../Context";
+import { Actions } from "../Context";
 
 export const Products = () => {
-  const { products } = useWish();
+  const { state } = useWish();
 
   const dispatchFunc = (state, action) => {
     switch (action.type) {
@@ -65,7 +66,7 @@ export const Products = () => {
     return data;
   };
 
-  const sortedData = sortData(products, sortBy);
+  const sortedData = sortData(state.products, sortBy);
   const filteredData = filterData(sortedData, fastDelivery, inStock);
   const searchedData = searchData(filteredData, searchText);
 
@@ -141,7 +142,7 @@ export const Products = () => {
 };
 
 const Product = ({ product }) => {
-  const { addToWish, setToast, setToastMessage } = useWish();
+  const { dispatch, setToast, setToastMessage } = useWish();
   return (
     <div className="product">
       <div className="card card-shopping">
@@ -153,7 +154,7 @@ const Product = ({ product }) => {
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} is added to wishlist`);
-            addToWish(product.id);
+            dispatch({ type: Actions.ADD_TO_WISH, payload: product.id });
           }}
           className="wish-button"
         >

@@ -1,15 +1,17 @@
-import { useWish } from "../Context";
+import { useWish, Actions } from "../Context";
 import { useEffect } from "react";
 
 export const WishList = () => {
-  const { wishProducts } = useWish();
+  const { state } = useWish();
   useEffect(() => {
     document.title = "Wish List";
   }, []);
   return (
     <div className="products-list">
-      {wishProducts.length > 0 ? (
-        wishProducts.map((item) => <Product key={item.id} product={item} />)
+      {state.wishProducts.length > 0 ? (
+        state.wishProducts.map((item) => (
+          <Product key={item.id} product={item} />
+        ))
       ) : (
         <h2>No items in WishList</h2>
       )}
@@ -18,14 +20,7 @@ export const WishList = () => {
 };
 
 const Product = ({ product }) => {
-  const {
-    removeFromWish,
-    increaseItem,
-    removeOneItem,
-    moveToCart,
-    setToast,
-    setToastMessage,
-  } = useWish();
+  const { dispatch, setToast, setToastMessage } = useWish();
   return (
     <div className="wish-product">
       <div className="card card-shopping">
@@ -38,7 +33,7 @@ const Product = ({ product }) => {
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} removed from wish list`);
-            removeFromWish(product.id);
+            dispatch({ type: Actions.REMOVE_FROM_WISH, payload: product.id });
           }}
           className="remove-button"
         >
@@ -48,7 +43,10 @@ const Product = ({ product }) => {
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} is added to Cart`);
-            moveToCart(product.id, product.count);
+            dispatch({
+              type: Actions.MOVE_TO_CART,
+              payload: { id: product.id, count: product.count },
+            });
           }}
         >
           Move To Cart
@@ -60,8 +58,26 @@ const Product = ({ product }) => {
             alignItems: "center",
           }}
         >
-          <button onClick={() => increaseItem(product.id)}>+</button>
-          <button onClick={() => removeOneItem(product.id)}>-</button>
+          <button
+            onClick={() => {
+              dispatch({
+                type: Actions.INCREASE_ITEM_IN_WISH,
+                payload: product.id,
+              });
+            }}
+          >
+            +
+          </button>
+          <button
+            onClick={() => {
+              dispatch({
+                type: Actions.DECREASE_ITEM_IN_WISH,
+                payload: product.id,
+              });
+            }}
+          >
+            -
+          </button>
         </div>
       </div>
     </div>

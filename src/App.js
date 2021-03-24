@@ -1,5 +1,3 @@
-// import logo from "./logo.svg";
-
 import { useState } from "react";
 import { WishList, Products, Toast, Cart } from "./Components";
 import { useWish } from "./Context";
@@ -7,7 +5,7 @@ import "./App.css";
 
 function App() {
   const [route, setRoute] = useState("products");
-  const { wishProducts, toast, cartProducts } = useWish();
+  const { toast, state } = useWish();
   return (
     <div>
       <nav className="navigation">
@@ -18,7 +16,7 @@ function App() {
           <div className="wishlist-icon">
             <i onClick={() => setRoute("wishlist")} class="far fa-heart"></i>
             <span className="wishlist-count">
-              {wishProducts.length === 0 ? "" : wishProducts.length}
+              {state.wishProducts.length === 0 ? "" : state.wishProducts.length}
             </span>
           </div>
           <div className="cart-icon">
@@ -28,7 +26,7 @@ function App() {
               aria-hidden="true"
             ></i>
             <span className="cart-count">
-              {cartProducts.length === 0 ? "" : cartProducts.length}
+              {state.cartProducts.length === 0 ? "" : state.cartProducts.length}
             </span>
           </div>
         </div>

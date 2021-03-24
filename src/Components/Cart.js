@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useWish } from "../Context";
+import { useWish, Actions } from "../Context";
 export const Cart = () => {
-  const { cartProducts } = useWish();
+  const { state } = useWish();
   useEffect(() => {
     document.title = "Cart";
   }, []);
   return (
     <div>
-      {cartProducts.length > 0 ? (
+      {state.cartProducts.length > 0 ? (
         <DisplayProducts />
       ) : (
         <h2>No items in Cart</h2>
@@ -17,11 +17,11 @@ export const Cart = () => {
 };
 
 const DisplayProducts = () => {
-  const { cartProducts } = useWish();
+  const { state } = useWish();
   return (
     <div>
       <ul className="products-list">
-        {cartProducts.map((item) => (
+        {state.cartProducts.map((item) => (
           <Product key={item.id} product={item} />
         ))}
       </ul>
@@ -31,7 +31,7 @@ const DisplayProducts = () => {
 };
 
 const Product = ({ product }) => {
-  const { removeFromCart, setToast, setToastMessage } = useWish();
+  const { dispatch, setToast, setToastMessage } = useWish();
   return (
     <div className="wish-product">
       <div className="card card-shopping">
@@ -44,7 +44,7 @@ const Product = ({ product }) => {
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} removed from Cart`);
-            removeFromCart(product.id);
+            dispatch({ type: Actions.REMOVE_FROM_CART, payload: product.id });
           }}
           className="remove-button"
         >
@@ -66,22 +66,22 @@ const Product = ({ product }) => {
 };
 
 const PricingDisplay = () => {
-  const { cartProducts } = useWish();
+  const { state } = useWish();
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
-    const totalCost = cartProducts.reduce(
+    const totalCost = state.cartProducts.reduce(
       (cumulative, current) =>
         cumulative + Number(current.count) * Number(current.price),
       0
     );
     setTotalPrice(totalCost);
-  }, [cartProducts]);
+  }, [state.cartProducts]);
   return (
     <div>
       <p style={{ paddingLeft: "2.5rem" }}>Total Price :{totalPrice}</p>
       <p style={{ paddingLeft: "2.5rem" }}>Price Breakage</p>
       <ul>
-        {cartProducts.map((product) => (
+        {state.cartProducts.map((product) => (
           <div className="price">
             <p>
               {product.brandName} * {product.count} ={" "}

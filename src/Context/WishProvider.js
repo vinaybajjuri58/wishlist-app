@@ -72,12 +72,11 @@ export const WishProvider = ({ children }) => {
     );
     if (foundInWish === -1) {
       return [...wishItems, { ...productItems[productIndex], count: 1 }];
-    } else {
-      let allItems = [...wishItems];
-      const index = allItems.findIndex((item) => item.id === idFromWishClick);
-      allItems[index].count += 1;
-      return allItems.filter((item) => item.count > 0);
     }
+    let allItems = [...wishItems];
+    const index = allItems.findIndex((item) => item.id === idFromWishClick);
+    allItems[index].count += 1;
+    return allItems.filter((item) => item.count > 0);
   }
   function removeFromWish(idFromRemoveClick, wishItems) {
     let allItems = [...wishItems];
@@ -102,12 +101,11 @@ export const WishProvider = ({ children }) => {
           count: countFromWish,
         },
       ];
-    } else {
-      let allItems = [...cartItems];
-      const index = allItems.findIndex((item) => item.id === idFromWish);
-      allItems[index].count += countFromWish;
-      return allItems.filter((item) => item.count > 0);
     }
+    let allItems = [...cartItems];
+    const index = allItems.findIndex((item) => item.id === idFromWish);
+    allItems[index].count += countFromWish;
+    return allItems.filter((item) => item.count > 0);
   }
 
   function removeFromCart(idFromRemoveCart, cartItems) {
@@ -124,9 +122,9 @@ export const WishProvider = ({ children }) => {
     );
   }
   function removeOneItem(id, wishItems) {
-    let allItems = [...wishItems];
-    let index = allItems.findIndex((item) => item.id === id);
-    allItems[index].count -= 1;
+    let allItems = wishItems.map((item) =>
+      item.id === id ? { ...item, count: item.count - 1 } : { ...item }
+    );
 
     return allItems.filter((item) => item.count > 0);
   }

@@ -1,9 +1,12 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useWish } from "../Context";
 import { Actions } from "../Context";
 
 export const Products = () => {
   const { state } = useWish();
+  useEffect(() => {
+    document.title = "Products";
+  }, []);
 
   const dispatchFunc = (state, action) => {
     switch (action.type) {
@@ -77,6 +80,7 @@ export const Products = () => {
   return (
     <div>
       <div>
+        <span className="text">Sort using price</span>
         <label>
           <input
             type="radio"
@@ -101,6 +105,7 @@ export const Products = () => {
         </label>
       </div>
       <div>
+        <span className="text">Filters : </span>
         <label>
           <input
             type="checkbox"

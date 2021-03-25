@@ -1,3 +1,3 @@
-export { useWish } from "./UseWish";
-export { WishProvider } from "./WishProvider";
+export { useWish } from "./useWish";
+export { DataProvider } from "./DataProvider";
 export * as Actions from "./ActionTypes";

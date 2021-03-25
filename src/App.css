@@ -1,6 +1,6 @@
 :root {
-  --will-display: none;
-  --remove-button: none;
+  --will-display: block;
+  --remove-button: block;
 }
 .logo {
   border: none;
@@ -70,13 +70,19 @@ nav {
   --remove-button: block;
 }
 
-.wish-button {
+.cart-button {
   display: var(--will-display);
   position: absolute;
   width: 100%;
   background-color: white;
   height: 2rem;
   top: 275px;
+}
+.wish-button {
+  display: var(--will-display);
+  position: absolute;
+  right: 0.75rem;
+  top: 0.5rem;
 }
 .remove-button {
   display: var(--remove-button);
@@ -95,11 +101,5 @@ nav {
   .products-list {
     justify-content: center;
     align-items: center;
-  }
-  .wish-product {
-    --remove-button: block;
-  }
-  .product {
-    --will-display: block;
   }
 }

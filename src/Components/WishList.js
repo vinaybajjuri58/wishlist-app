@@ -44,7 +44,7 @@ const Product = ({ product }) => {
             setToast("true");
             setToastMessage(`${product.brandName} is added to Cart`);
             dispatch({
-              type: Actions.MOVE_TO_CART,
+              type: Actions.MOVE_TO_CART_FROM_WISH,
               payload: { id: product.id, count: product.count },
             });
           }}

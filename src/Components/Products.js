@@ -138,16 +138,31 @@ export const Products = () => {
         </label>
       </div>
       <ul className="products-list">
-        {searchedData.map((item) => (
-          <Product key={item.id} product={item} />
-        ))}
+        {searchedData.length > 0 ? (
+          searchedData.map((item) => <Product key={item.id} product={item} />)
+        ) : (
+          <h2 className="text text-large">
+            No products available with "{searchText}" brandname
+          </h2>
+        )}
       </ul>
     </div>
   );
 };
 
 const Product = ({ product }) => {
-  const { dispatch, setToast, setToastMessage } = useWish();
+  const { dispatch, setToast, setToastMessage, state } = useWish();
+  const inCartProducts = (id) => {
+    return state.cartProducts.findIndex((item) => item.id === id) === -1
+      ? false
+      : true;
+  };
+  const inWishProducts = (id) => {
+    return state.wishProducts.findIndex((item) => item.id === id) === -1
+      ? false
+      : true;
+  };
+
   return (
     <div className="product">
       <div className="card card-shopping">
@@ -155,16 +170,56 @@ const Product = ({ product }) => {
         <h4 className="card-brand">{product.brandName}</h4>
         <p className="card-desc">{product.description}</p>
         <p className="card-desc">Rs {product.price}</p>
-        <button
-          onClick={() => {
-            setToast("true");
-            setToastMessage(`${product.brandName} is added to wishlist`);
-            dispatch({ type: Actions.ADD_TO_WISH, payload: product.id });
-          }}
-          className="wish-button"
-        >
-          WISHLIST
-        </button>
+
+        {inWishProducts(product.id) ? (
+          <span
+            onClick={() => {
+              setToast("true");
+              setToastMessage(`${product.brandName} removed from  wishlist`);
+              dispatch({ type: Actions.REMOVE_FROM_WISH, payload: product.id });
+            }}
+            className="wish-button"
+            role="button"
+          >
+            <i class="fas fa-heart"></i>
+          </span>
+        ) : (
+          <span
+            onClick={() => {
+              setToast("true");
+              setToastMessage(`${product.brandName} is added to wishlist`);
+              dispatch({ type: Actions.ADD_TO_WISH, payload: product.id });
+            }}
+            className="wish-button"
+            role="button"
+          >
+            <i class="far fa-heart"></i>
+          </span>
+        )}
+
+        {inCartProducts(product.id) ? (
+          <button
+            onClick={() => {
+              setToast("true");
+              setToastMessage(`${product.brandName} is added to Cart`);
+              dispatch({ type: Actions.REMOVE_FROM_CART, payload: product.id });
+            }}
+            className="cart-button"
+          >
+            REMOVE FROM CART
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setToast("true");
+              setToastMessage(`${product.brandName} is added to Cart`);
+              dispatch({ type: Actions.ADD_TO_CART, payload: product.id });
+            }}
+            className="cart-button"
+          >
+            ADD TO CART
+          </button>
+        )}
       </div>
     </div>
   );

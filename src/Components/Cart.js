@@ -50,6 +50,18 @@ const Product = ({ product }) => {
         >
           X
         </button>
+        <button
+          onClick={() => {
+            setToast("true");
+            setToastMessage(`${product.brandName} moved to wish`);
+            dispatch({
+              type: Actions.MOVE_TO_WISH_FROM_CART,
+              payload: { id: product.id, count: product.count },
+            });
+          }}
+        >
+          Move To Wish
+        </button>
         <div
           style={{
             display: "flex",
@@ -57,8 +69,26 @@ const Product = ({ product }) => {
             alignItems: "center",
           }}
         >
-          {/* <button onClick={() => increaseItem(product.id)}>+</button>
-          <button onClick={() => removeOneItem(product.id)}>-</button> */}
+          <button
+            onClick={() => {
+              dispatch({
+                type: Actions.INCREASE_ITEM_IN_CART,
+                payload: product.id,
+              });
+            }}
+          >
+            +
+          </button>
+          <button
+            onClick={() => {
+              dispatch({
+                type: Actions.DECREASE_ITEM_IN_CART,
+                payload: product.id,
+              });
+            }}
+          >
+            -
+          </button>
         </div>
       </div>
     </div>

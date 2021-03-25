@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { WishList, Products, Toast, Cart } from "./Components";
-import { useWish } from "./Context";
+import { useData } from "./Context";
 import "./App.css";
 
 function App() {
   const [route, setRoute] = useState("products");
-  const { toast, state } = useWish();
+  const { toast, state } = useData();
   return (
     <div>
       <nav className="navigation">

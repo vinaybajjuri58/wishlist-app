@@ -1,8 +1,8 @@
-import { useWish, Actions } from "../Context";
+import { useData, Actions } from "../Context";
 import { useEffect } from "react";
 
 export const WishList = () => {
-  const { state } = useWish();
+  const { state } = useData();
   useEffect(() => {
     document.title = "Wish List";
   }, []);
@@ -20,7 +20,7 @@ export const WishList = () => {
 };
 
 const Product = ({ product }) => {
-  const { dispatch, setToast, setToastMessage } = useWish();
+  const { dispatch, setToast, setToastMessage } = useData();
   return (
     <div className="wish-product">
       <div className="card card-shopping">

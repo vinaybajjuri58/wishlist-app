@@ -1,5 +1,5 @@
 import { useContext } from "react";
 import { DataContext } from "./DataContext";
-export const useWish = () => {
+export const useData = () => {
   return useContext(DataContext);
 };

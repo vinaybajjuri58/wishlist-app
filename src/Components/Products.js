@@ -1,9 +1,9 @@
 import { useEffect, useReducer } from "react";
-import { useWish } from "../Context";
+import { useData } from "../Context";
 import { Actions } from "../Context";
 
 export const Products = () => {
-  const { state } = useWish();
+  const { state } = useData();
   useEffect(() => {
     document.title = "Products";
   }, []);
@@ -151,7 +151,7 @@ export const Products = () => {
 };
 
 const Product = ({ product }) => {
-  const { dispatch, setToast, setToastMessage, state } = useWish();
+  const { dispatch, setToast, setToastMessage, state } = useData();
   const inCartProducts = (id) => {
     return state.cartProducts.findIndex((item) => item.id === id) === -1
       ? false

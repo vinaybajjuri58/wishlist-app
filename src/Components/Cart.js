@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useWish, Actions } from "../Context";
+import { useData, Actions } from "../Context";
 export const Cart = () => {
-  const { state } = useWish();
+  const { state } = useData();
   useEffect(() => {
     document.title = "Cart";
   }, []);
@@ -17,7 +17,7 @@ export const Cart = () => {
 };
 
 const DisplayProducts = () => {
-  const { state } = useWish();
+  const { state } = useData();
   return (
     <div>
       <ul className="products-list">
@@ -31,7 +31,7 @@ const DisplayProducts = () => {
 };
 
 const Product = ({ product }) => {
-  const { dispatch, setToast, setToastMessage } = useWish();
+  const { dispatch, setToast, setToastMessage } = useData();
   return (
     <div className="wish-product">
       <div className="card card-shopping">
@@ -96,7 +96,7 @@ const Product = ({ product }) => {
 };
 
 const PricingDisplay = () => {
-  const { state } = useWish();
+  const { state } = useData();
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     const totalCost = state.cartProducts.reduce(

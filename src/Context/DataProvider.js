@@ -147,9 +147,11 @@ export const DataProvider = ({ children }) => {
         },
       ];
     }
-    let allItems = [...cartItems];
-    const index = allItems.findIndex((item) => item.id === idFromWish);
-    allItems[index].count += countFromWish;
+    const allItems = cartItems.map((item) =>
+      item.id === idFromWish
+        ? { ...item, count: item.count + countFromWish }
+        : { ...item }
+    );
     return allItems.filter((item) => item.count > 0);
   }
   function moveToWish(idFromCart, countFromCart = 1, products, wishItems) {

@@ -1,6 +1,3 @@
-:root {
-  --will-display: block;
-}
 .logo {
   border: none;
   background-color: inherit;
@@ -65,7 +62,7 @@ nav {
 }
 
 .cart-button {
-  display: var(--will-display);
+  display: block;
   position: absolute;
   width: 100%;
   background-color: white;
@@ -73,13 +70,13 @@ nav {
   top: 275px;
 }
 .wish-button {
-  display: var(--will-display);
+  display: block;
   position: absolute;
   right: 0.75rem;
   top: 0.5rem;
 }
 .remove-button {
-  display: var(--will-display);
+  display: block;
   position: absolute;
   right: 0.25rem;
   top: 0.25rem;

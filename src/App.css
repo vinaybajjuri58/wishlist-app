@@ -1,6 +1,5 @@
 :root {
   --will-display: block;
-  --remove-button: block;
 }
 .logo {
   border: none;
@@ -60,14 +59,9 @@ nav {
   position: relative;
   margin: 0.5rem;
 }
-.product:hover {
-  --will-display: block;
-}
+
 .wish-product {
   position: relative;
-}
-.wish-product:hover {
-  --remove-button: block;
 }
 
 .cart-button {
@@ -85,7 +79,7 @@ nav {
   top: 0.5rem;
 }
 .remove-button {
-  display: var(--remove-button);
+  display: var(--will-display);
   position: absolute;
   right: 0.25rem;
   top: 0.25rem;

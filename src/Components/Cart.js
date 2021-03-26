@@ -55,7 +55,7 @@ const Product = ({ product }) => {
             setToast("true");
             setToastMessage(`${product.brandName} moved to wish`);
             dispatch({
-              type: Actions.MOVE_TO_WISH_FROM_CART,
+              type: Actions.MOVE_TO_WISHLIST_FROM_CART,
               payload: { id: product.id, count: product.count },
             });
           }}

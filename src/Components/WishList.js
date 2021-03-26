@@ -33,7 +33,10 @@ const Product = ({ product }) => {
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} removed from wish list`);
-            dispatch({ type: Actions.REMOVE_FROM_WISH, payload: product.id });
+            dispatch({
+              type: Actions.REMOVE_FROM_WISHLIST,
+              payload: product.id,
+            });
           }}
           className="remove-button"
         >
@@ -44,7 +47,7 @@ const Product = ({ product }) => {
             setToast("true");
             setToastMessage(`${product.brandName} is added to Cart`);
             dispatch({
-              type: Actions.MOVE_TO_CART_FROM_WISH,
+              type: Actions.MOVE_TO_CART_FROM_WISHLIST,
               payload: { id: product.id, count: product.count },
             });
           }}
@@ -61,7 +64,7 @@ const Product = ({ product }) => {
           <button
             onClick={() => {
               dispatch({
-                type: Actions.INCREASE_ITEM_IN_WISH,
+                type: Actions.INCREASE_ITEM_IN_WISHLIST,
                 payload: product.id,
               });
             }}
@@ -71,7 +74,7 @@ const Product = ({ product }) => {
           <button
             onClick={() => {
               dispatch({
-                type: Actions.DECREASE_ITEM_IN_WISH,
+                type: Actions.DECREASE_ITEM_IN_WISHLIST,
                 payload: product.id,
               });
             }}

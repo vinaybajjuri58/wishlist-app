@@ -176,7 +176,10 @@ const Product = ({ product }) => {
             onClick={() => {
               setToast("true");
               setToastMessage(`${product.brandName} removed from  wishlist`);
-              dispatch({ type: Actions.REMOVE_FROM_WISH, payload: product.id });
+              dispatch({
+                type: Actions.REMOVE_FROM_WISHLIST,
+                payload: product.id,
+              });
             }}
             className="wish-button"
             role="button"
@@ -188,7 +191,7 @@ const Product = ({ product }) => {
             onClick={() => {
               setToast("true");
               setToastMessage(`${product.brandName} is added to wishlist`);
-              dispatch({ type: Actions.ADD_TO_WISH, payload: product.id });
+              dispatch({ type: Actions.ADD_TO_WISHLIST, payload: product.id });
             }}
             className="wish-button"
             role="button"

@@ -43,6 +43,7 @@ const Product = ({ product }) => {
           X
         </button>
         <button
+          className="button button-primary"
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} is added to Cart`);
@@ -62,6 +63,7 @@ const Product = ({ product }) => {
           }}
         >
           <button
+            className="button button-border border-primary"
             onClick={() => {
               dispatch({
                 type: Actions.INCREASE_ITEM_IN_WISHLIST,
@@ -72,6 +74,7 @@ const Product = ({ product }) => {
             +
           </button>
           <button
+            className="button button-border border-primary"
             onClick={() => {
               dispatch({
                 type: Actions.DECREASE_ITEM_IN_WISHLIST,

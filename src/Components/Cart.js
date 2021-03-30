@@ -51,6 +51,7 @@ const Product = ({ product }) => {
           X
         </button>
         <button
+          className="button button-primary"
           onClick={() => {
             setToast("true");
             setToastMessage(`${product.brandName} moved to wish`);
@@ -70,6 +71,7 @@ const Product = ({ product }) => {
           }}
         >
           <button
+            className="button button-border border-primary"
             onClick={() => {
               dispatch({
                 type: Actions.INCREASE_ITEM_IN_CART,
@@ -80,6 +82,7 @@ const Product = ({ product }) => {
             +
           </button>
           <button
+            className="button button-border border-primary"
             onClick={() => {
               dispatch({
                 type: Actions.DECREASE_ITEM_IN_CART,
@@ -109,8 +112,8 @@ const PricingDisplay = () => {
   return (
     <div>
       <p style={{ paddingLeft: "2.5rem" }}>Total Price :{totalPrice}</p>
-      <p style={{ paddingLeft: "2.5rem" }}>Price Breakage</p>
-      <ul>
+      <p style={{ paddingLeft: "2.5rem" }}>Price Breakdown : </p>
+      <ul className="list list-unstyled">
         {state.cartProducts.map((product) => (
           <div className="price">
             <p>

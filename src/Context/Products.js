@@ -44,7 +44,7 @@ export const products = [
     url:
       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/13420828/2021/2/18/61a79dc5-805d-4c2f-a5c1-996a78742f531613633242784-US-Polo-Assn-Men-Tshirts-7961613633241342-1.jpg",
     brandName: "US Polo Assn.",
-    description: "Men Navy Blue Solid Polo T-shirt",
+    description: "Men Navy Blue T-shirt",
     price: 550,
     speedDelivery: false,
     inStock: true,

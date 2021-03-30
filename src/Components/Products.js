@@ -207,7 +207,7 @@ const Product = ({ product }) => {
               setToastMessage(`${product.brandName} is added to Cart`);
               dispatch({ type: Actions.REMOVE_FROM_CART, payload: product.id });
             }}
-            className="cart-button"
+            className="button button-primary"
           >
             REMOVE FROM CART
           </button>
@@ -218,7 +218,7 @@ const Product = ({ product }) => {
               setToastMessage(`${product.brandName} is added to Cart`);
               dispatch({ type: Actions.ADD_TO_CART, payload: product.id });
             }}
-            className="cart-button"
+            className="button button-primary"
           >
             ADD TO CART
           </button>

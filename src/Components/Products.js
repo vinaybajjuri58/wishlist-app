@@ -1,12 +1,27 @@
 import { useEffect, useReducer } from "react";
 import { useData } from "../Context";
 import { Actions } from "../Context";
+import axios from "axios";
+// import { useAxios } from "./useAxios";
 
 export const Products = () => {
-  const { state } = useData();
+  const { state, dispatch } = useData();
   useEffect(() => {
     document.title = "Products";
   }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data: products } = await axios.get("/api/products");
+        dispatch({
+          type: Actions.SET_PRODUCTS_DATA,
+          payload: products.products,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [dispatch]);
 
   const dispatchFunc = (state, action) => {
     switch (action.type) {
@@ -23,15 +38,15 @@ export const Products = () => {
     }
   };
 
-  const [{ sortBy, fastDelivery, inStock, searchText }, dispatch] = useReducer(
-    dispatchFunc,
-    {
-      sortBy: null,
-      fastDelivery: false,
-      inStock: false,
-      searchText: "",
-    }
-  );
+  const [
+    { sortBy, fastDelivery, inStock, searchText },
+    filterDispatch,
+  ] = useReducer(dispatchFunc, {
+    sortBy: null,
+    fastDelivery: false,
+    inStock: false,
+    searchText: "",
+  });
 
   const sortData = (data, sortBy) => {
     if (sortBy && sortBy === "SORT_LOW_TO_HIGH") {
@@ -74,78 +89,94 @@ export const Products = () => {
   const searchedData = searchData(filteredData, searchText);
 
   const changeHandler = (event) => {
-    dispatch({ type: "SEARCH_TEXT", payload: event.target.value });
+    filterDispatch({ type: "SEARCH_TEXT", payload: event.target.value });
   };
 
   return (
     <div>
-      <div>
-        <span className="text">Sort using price</span>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            onChange={() =>
-              dispatch({ type: "SORTBY", payload: "SORT_LOW_TO_HIGH" })
-            }
-            checked={sortBy && sortBy === "SORT_LOW_TO_HIGH"}
-          />
-          LOW TO HIGH
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            onChange={() =>
-              dispatch({ type: "SORTBY", payload: "SORT_HIGH_TO_LOW" })
-            }
-            checked={sortBy && sortBy === "SORT_HIGH_TO_LOW"}
-          />
-          HIGH TO LOW
-        </label>
-      </div>
-      <div>
-        <span className="text">Filters : </span>
-        <label>
-          <input
-            type="checkbox"
-            name="Filter Delivery"
-            onChange={() => dispatch({ type: "FILTER_SPEED_DEIVERY" })}
-            checked={fastDelivery}
-          />
-          Fast Delivery
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="Filter inStock"
-            onChange={() => dispatch({ type: "FILTER_IN_STOCK" })}
-            checked={inStock}
-          />
-          In Stock
-        </label>
-      </div>
-      <div>
-        <label>
-          Search :
-          <input
-            className="input-styled"
-            type="text"
-            placeholder="search products with brandname"
-            value={searchText}
-            onChange={changeHandler}
-          />
-        </label>
-      </div>
-      <ul className="products-list">
-        {searchedData.length > 0 ? (
-          searchedData.map((item) => <Product key={item.id} product={item} />)
-        ) : (
-          <h2 className="text text-large">
-            No products available with "{searchText}" brandname
-          </h2>
-        )}
-      </ul>
+      {state.products.length > 0 ? (
+        <div>
+          <div>
+            <span className="text">Sort using price</span>
+            <label>
+              <input
+                type="radio"
+                name="sort"
+                onChange={() =>
+                  filterDispatch({
+                    type: "SORTBY",
+                    payload: "SORT_LOW_TO_HIGH",
+                  })
+                }
+                checked={sortBy && sortBy === "SORT_LOW_TO_HIGH"}
+              />
+              LOW TO HIGH
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="sort"
+                onChange={() =>
+                  filterDispatch({
+                    type: "SORTBY",
+                    payload: "SORT_HIGH_TO_LOW",
+                  })
+                }
+                checked={sortBy && sortBy === "SORT_HIGH_TO_LOW"}
+              />
+              HIGH TO LOW
+            </label>
+          </div>
+          <div>
+            <span className="text">Filters : </span>
+            <label>
+              <input
+                type="checkbox"
+                name="Filter Delivery"
+                onChange={() =>
+                  filterDispatch({ type: "FILTER_SPEED_DEIVERY" })
+                }
+                checked={fastDelivery}
+              />
+              Fast Delivery
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="Filter inStock"
+                onChange={() => filterDispatch({ type: "FILTER_IN_STOCK" })}
+                checked={inStock}
+              />
+              In Stock
+            </label>
+          </div>
+          <div>
+            <label>
+              Search :
+              <input
+                className="input-styled"
+                type="text"
+                placeholder="search products with brandname"
+                value={searchText}
+                onChange={changeHandler}
+              />
+            </label>
+          </div>
+          <ul className="products-list">
+            {searchedData.length > 0 ? (
+              searchedData.map((item) => (
+                <Product key={item.id} product={item} />
+              ))
+            ) : (
+              <h2 className="text text-large">
+                No products available with "{searchText}" brandname
+              </h2>
+            )}
+          </ul>
+        </div>
+      ) : (
+        <h2>Loading Products</h2>
+      )}
     </div>
   );
 };

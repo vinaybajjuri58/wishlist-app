@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { WishList, Products, Toast, Cart } from "./Components";
+// import axios from "axios";
 import { useData } from "./Context";
 import "./App.css";
 
 function App() {
   const [route, setRoute] = useState("products");
   const { toast, state } = useData();
+
   return (
     <div>
       <nav className="navigation">

@@ -1,6 +1,11 @@
 import * as Actions from "./ActionTypes";
 export const reducerFunction = (state, action) => {
   switch (action.type) {
+    case Actions.SET_PRODUCTS_DATA:
+      return {
+        ...state,
+        products: action.payload,
+      };
     case Actions.ADD_TO_WISHLIST:
       return {
         ...state,

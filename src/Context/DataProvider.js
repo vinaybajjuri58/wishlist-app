@@ -1,6 +1,5 @@
 import { DataContext } from "./DataContext";
 import { useState, useReducer } from "react";
-import { products } from "./Products";
 import { reducerFunction } from "./ReducerFunction";
 
 export const DataProvider = ({ children }) => {
@@ -8,7 +7,7 @@ export const DataProvider = ({ children }) => {
   const [toastMessage, setToastMessage] = useState("");
 
   const [state, dispatch] = useReducer(reducerFunction, {
-    products,
+    products: [],
     wishProducts: [],
     cartProducts: [],
   });

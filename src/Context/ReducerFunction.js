@@ -6,6 +6,16 @@ export const reducerFunction = (state, action) => {
         ...state,
         products: action.payload,
       };
+    case Actions.SET_WISHLIST_DATA:
+      return {
+        ...state,
+        wishProducts: action.payload,
+      };
+    case Actions.SET_CART_DATA:
+      return {
+        ...state,
+        cartProducts: action.payload,
+      };
     case Actions.ADD_TO_WISHLIST:
       return {
         ...state,

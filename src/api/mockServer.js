@@ -1,6 +1,8 @@
 import { createServer, Model, RestSerializer } from "miragejs";
 import { products } from "../Context";
 export default function mockServer() {
+  const wishListProducts = [];
+  const cartProducts = [];
   createServer({
     serializers: {
       application: RestSerializer,
@@ -21,6 +23,19 @@ export default function mockServer() {
       this.get("/products", () => {
         return {
           products,
+        };
+      });
+      this.get("/wishList", () => {
+        return {
+          wishListProducts,
+        };
+      });
+      this.post("/wishList", (request) => {
+        console.log(request);
+      });
+      this.get("/cartList", () => {
+        return {
+          cartProducts,
         };
       });
     },

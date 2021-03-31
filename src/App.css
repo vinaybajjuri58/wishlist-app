@@ -75,13 +75,6 @@ nav {
   right: 0.75rem;
   top: 0.5rem;
 }
-.remove-button {
-  display: block;
-  position: absolute;
-  right: 0.25rem;
-  top: 0.25rem;
-  border-radius: 50%;
-}
 
 /* .cart-section {
   display: flex;

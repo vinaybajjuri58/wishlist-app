@@ -15,7 +15,7 @@ export const CartItem = ({ product }) => {
             setToastMessage(`${product.brandName} removed from Cart`);
             dispatch({ type: Actions.REMOVE_FROM_CART, payload: product.id });
           }}
-          className="remove-button"
+          className="card-remove button button-border"
         >
           X
         </button>

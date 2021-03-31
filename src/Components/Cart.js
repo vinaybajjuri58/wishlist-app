@@ -12,8 +12,11 @@ export const Cart = () => {
   // useEffect(() => {
   //   (async () => {
   //     try {
-  //       const reponse = await axios.get("/api/cartList");
-  //       console.log({ reponse });
+  //       const { data } = await axios.get("/api/cartList");
+  //       dispatch({
+  //         type: Actions.SET_CART_DATA,
+  //         payload: data.cartProducts,
+  //       });
   //     } catch (err) {
   //       console.log({ err });
   //     }

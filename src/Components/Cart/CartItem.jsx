@@ -1,4 +1,5 @@
-import { useData, Actions } from "../Context";
+import { useData, Actions } from "../../Context";
+// import axios from "axios"
 export const CartItem = ({ product }) => {
   const { dispatch, setToast, setToastMessage } = useData();
   return (
@@ -10,9 +11,11 @@ export const CartItem = ({ product }) => {
         <p className="card-desc">Rs {product.price}</p>
         <p className="card-desc">Count: {product.count}</p>
         <button
-          onClick={() => {
+          onClick={async() => {
             setToast("true");
             setToastMessage(`${product.brandName} removed from Cart`);
+            // const response = await axios.delete(`/api/carts/${product.id}`);
+            // console.log({response})
             dispatch({ type: Actions.REMOVE_FROM_CART, payload: product.id });
           }}
           className="card-remove button button-border"

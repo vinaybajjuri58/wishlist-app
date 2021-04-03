@@ -1,27 +1,34 @@
 import { useEffect, useState } from "react";
-import { useData } from "../Context";
-// import { Actions } from "../Context";
+import { useData } from "../../Context";
+// import { Actions } from "../../Context";
 // import axios from "axios";
 
-import { CartItem } from "./CartItem.jsx";
+import { CartItem } from "./CartItem";
 export const Cart = () => {
   const { state } = useData();
+  // const [loading, setLoading] = useState(false);
   useEffect(() => {
     document.title = "Cart";
   }, []);
   // useEffect(() => {
   //   (async () => {
   //     try {
-  //       const { data } = await axios.get("/api/cartList");
+  //       setLoading(true);
+  //       const { data: cart } = await axios.get("/api/carts");
   //       dispatch({
   //         type: Actions.SET_CART_DATA,
-  //         payload: data.cartProducts,
+  //         payload: cart.carts,
   //       });
   //     } catch (err) {
   //       console.log({ err });
+  //     } finally {
+  //       setLoading(false);
   //     }
   //   })();
   // }, [dispatch]);
+  // if (loading) {
+  //   return <h2>Loading Data</h2>;
+  // }
   return (
     <div>
       {/* {loadError === true && <h2>Error in loading cart Data</h2>} */}

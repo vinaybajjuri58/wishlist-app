@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
-import { useData } from "../Context";
-import { Actions } from "../Context";
+import { useData } from "../../Context";
+import { Actions } from "../../Context";
 import axios from "axios";
 import { ProductItem } from "./ProductItem.jsx";
 

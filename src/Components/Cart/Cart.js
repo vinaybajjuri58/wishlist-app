@@ -10,22 +10,6 @@ export const Cart = () => {
   useEffect(() => {
     document.title = "Cart";
   }, []);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       setLoading(true);
-  //       const { data: cart } = await axios.get("/api/carts");
-  //       dispatch({
-  //         type: Actions.SET_CART_DATA,
-  //         payload: cart.carts,
-  //       });
-  //     } catch (err) {
-  //       console.log({ err });
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   })();
-  // }, [dispatch]);
   // if (loading) {
   //   return <h2>Loading Data</h2>;
   // }

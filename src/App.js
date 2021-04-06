@@ -1,41 +1,17 @@
-import { useState } from "react";
-import { WishList, Products, Toast, Cart } from "./Components";
+import { Toast } from "./Components";
 // import axios from "axios";
 import { useData } from "./Context";
 import "./App.css";
+import { Navbar } from "./Components/Navbar";
+import { RouterComponent } from "./Routes";
 
 function App() {
-  const [route, setRoute] = useState("products");
-  const { toast, state } = useData();
+  const { toast } = useData();
 
   return (
     <div>
-      <nav className="navigation">
-        <button className="logo" onClick={() => setRoute("products")}>
-          Home
-        </button>
-        <div className="icons">
-          <div className="wishlist-icon">
-            <i onClick={() => setRoute("wishlist")} class="far fa-heart"></i>
-            <span className="wishlist-count">
-              {state.wishProducts.length === 0 ? "" : state.wishProducts.length}
-            </span>
-          </div>
-          <div className="cart-icon">
-            <i
-              onClick={() => setRoute("cart")}
-              class="fa fa-shopping-cart"
-              aria-hidden="true"
-            ></i>
-            <span className="cart-count">
-              {state.cartProducts.length === 0 ? "" : state.cartProducts.length}
-            </span>
-          </div>
-        </div>
-      </nav>
-      {route === "products" && <Products />}
-      {route === "wishlist" && <WishList />}
-      {route === "cart" && <Cart />}
+      <Navbar />
+      <RouterComponent />
       {toast ? <Toast /> : <></>}
     </div>
   );

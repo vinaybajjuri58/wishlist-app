@@ -2,13 +2,13 @@
 import { Actions,useData } from "../../Context";
 export const ProductItem = ({ product }) => {
   const { dispatch, setToast, setToastMessage, state } = useData();
-  const inCartProducts = (id) => {
-    return state.cartProducts.findIndex((item) => item.id === id) === -1
+  const inCartProducts = (_id) => {
+    return state.cartProducts.findIndex((item) => item._id === _id) === -1
       ? false
       : true;
   };
-  const inWishProducts = (id) => {
-    return state.wishProducts.findIndex((item) => item.id === id) === -1
+  const inWishProducts = (_id) => {
+    return state.wishProducts.findIndex((item) => item._id === _id) === -1
       ? false
       : true;
   };
@@ -17,20 +17,17 @@ export const ProductItem = ({ product }) => {
     <div className="product">
       <div className="card card-shopping">
         <img src={product.imageUrl} alt="" className="card-img" />
-        <h4 className="card-brand">{product.brandName}</h4>
-        <p className="card-desc">{product.description}</p>
+        <h4 className="card-brand">{product.name}</h4>
         <p className="card-desc">Rs {product.price}</p>
 
-        {inWishProducts(product.id) ? (
+        {inWishProducts(product._id) ? (
           <span
             onClick={async() => {
               setToast("true");
-              setToastMessage(`${product.brandName} removed from  wishlist`);
-              // const response = await axios.delete(`/api/wishes/${product.id}`);
-              // console.log({response})
+              setToastMessage(`${product.name} removed from  wishlist`);
               dispatch({
                 type: Actions.REMOVE_FROM_WISHLIST,
-                payload: product.id,
+                payload: product._id,
               });
             }}
             className="wish-button"
@@ -42,12 +39,8 @@ export const ProductItem = ({ product }) => {
           <span
             onClick={async () => {
               setToast("true");
-              setToastMessage(`${product.brandName} is added to wishlist`);
-              // const {data:wish} = await axios.post(`/api/wishes`,
-              // {wish:{...product,count:1}}
-              // );
-              // console.log({wish});
-              dispatch({ type: Actions.ADD_TO_WISHLIST, payload: product.id });
+              setToastMessage(`${product.name} is added to wishlist`);
+              dispatch({ type: Actions.ADD_TO_WISHLIST, payload: product._id });
             }}
             className="wish-button"
             role="button"
@@ -56,14 +49,12 @@ export const ProductItem = ({ product }) => {
           </span>
         )}
 
-        {inCartProducts(product.id) ? (
+        {inCartProducts(product._id) ? (
           <button
             onClick={async () => {
               setToast("true");
-              setToastMessage(`${product.brandName} is removed from Cart`);
-              // const response = await axios.delete(`/api/carts/${product.id}`);
-              // console.log({response})
-              dispatch({ type: Actions.REMOVE_FROM_CART, payload: product.id });
+              setToastMessage(`${product.name} is removed from Cart`);
+              dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id });
             }}
             className="button button-primary"
           >
@@ -73,12 +64,8 @@ export const ProductItem = ({ product }) => {
           <button
             onClick={async() => {
               setToast("true");
-              setToastMessage(`${product.brandName} is added to Cart`);
-              // const {data:cart} = await axios.post(`/api/carts`,
-              // {cart:{...product,count:1}}
-              // );
-              // console.log(cart)
-              dispatch({ type: Actions.ADD_TO_CART, payload: product.id });
+              setToastMessage(`${product.name} is added to Cart`);
+              dispatch({ type: Actions.ADD_TO_CART, payload: product._id });
             }}
             className="button button-primary"
           >

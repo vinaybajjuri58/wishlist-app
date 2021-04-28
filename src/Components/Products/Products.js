@@ -1,30 +1,14 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { useData } from "../../Context";
-import { Actions } from "../../Context";
-import axios from "axios";
 import { ProductItem } from "./ProductItem.jsx";
 import { dispatchFunc } from "./filterReducer";
 import { sortData, filterData, searchData } from "./util";
 
 export const Products = () => {
-  const { state, dispatch } = useData();
-  const [loadError, setLoadError] = useState(false);
+  const { state } = useData();
   useEffect(() => {
     document.title = "Products";
   }, []);
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data: products } = await axios.get("/api/products");
-        dispatch({
-          type: Actions.SET_PRODUCTS_DATA,
-          payload: products.products,
-        });
-      } catch (err) {
-        setLoadError(true);
-      }
-    })();
-  }, [dispatch]);
 
   const [
     { sortBy, fastDelivery, inStock, searchText },
@@ -46,7 +30,6 @@ export const Products = () => {
 
   return (
     <div>
-      {loadError && <h2>Error in loading Data</h2>}
       {state.products.length > 0 ? (
         <div>
           <div>
@@ -120,7 +103,7 @@ export const Products = () => {
           <ul className="products-list">
             {searchedData.length > 0 ? (
               searchedData.map((item) => (
-                <ProductItem key={item.id} product={item} />
+                <ProductItem key={item._id} product={item} />
               ))
             ) : (
               <h2 className="text text-large">

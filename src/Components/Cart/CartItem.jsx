@@ -6,17 +6,17 @@ export const CartItem = ({ product }) => {
     <div className="wish-product">
       <div className="card card-shopping">
         <img src={product.imageUrl} alt="" className="card-img" />
-        <h4 className="card-brand">{product.brandName}</h4>
+        <h4 className="card-brand">{product.name}</h4>
         <p className="card-desc">{product.description}</p>
         <p className="card-desc">Rs {product.price}</p>
         <p className="card-desc">Count: {product.count}</p>
         <button
           onClick={async() => {
             setToast("true");
-            setToastMessage(`${product.brandName} removed from Cart`);
+            setToastMessage(`${product.name} removed from Cart`);
             // const response = await axios.delete(`/api/carts/${product.id}`);
             // console.log({response})
-            dispatch({ type: Actions.REMOVE_FROM_CART, payload: product.id });
+            dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id });
           }}
           className="card-remove button button-border"
         >
@@ -26,10 +26,10 @@ export const CartItem = ({ product }) => {
           className="button button-primary"
           onClick={() => {
             setToast("true");
-            setToastMessage(`${product.brandName} moved to wish`);
+            setToastMessage(`${product.name} moved to wish`);
             dispatch({
               type: Actions.MOVE_TO_WISHLIST_FROM_CART,
-              payload: { id: product.id, count: product.count },
+              payload: { id: product._id, count: product.count },
             });
           }}
         >
@@ -47,7 +47,7 @@ export const CartItem = ({ product }) => {
             onClick={() => {
               dispatch({
                 type: Actions.INCREASE_ITEM_IN_CART,
-                payload: product.id,
+                payload: product._id,
               });
             }}
           >
@@ -58,7 +58,7 @@ export const CartItem = ({ product }) => {
             onClick={() => {
               dispatch({
                 type: Actions.DECREASE_ITEM_IN_CART,
-                payload: product.id,
+                payload: product._id,
               });
             }}
           >

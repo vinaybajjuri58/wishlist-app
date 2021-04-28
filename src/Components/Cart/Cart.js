@@ -1,21 +1,15 @@
 import { useEffect, useState } from "react";
 import { useData } from "../../Context";
-// import { Actions } from "../../Context";
-// import axios from "axios";
 
 import { CartItem } from "./CartItem";
 export const Cart = () => {
   const { state } = useData();
-  // const [loading, setLoading] = useState(false);
   useEffect(() => {
     document.title = "Cart";
   }, []);
-  // if (loading) {
-  //   return <h2>Loading Data</h2>;
-  // }
+
   return (
     <div>
-      {/* {loadError === true && <h2>Error in loading cart Data</h2>} */}
       {state.cartProducts.length > 0 ? (
         <DisplayProducts />
       ) : (
@@ -31,7 +25,7 @@ const DisplayProducts = () => {
     <div>
       <ul className="products-list">
         {state.cartProducts.map((item) => (
-          <CartItem key={item.id} product={item} />
+          <CartItem key={item._id} product={item} />
         ))}
       </ul>
       <PricingDisplay />
@@ -55,7 +49,7 @@ const PricingDisplay = () => {
       <p style={{ paddingLeft: "2.5rem" }}>Price Breakdown : </p>
       <ul className="list list-unstyled">
         {state.cartProducts.map((product) => (
-          <div className="price" key={product.id}>
+          <div className="price" key={product._id}>
             <p>
               {product.brandName} * {product.count} ={" "}
               {Number(product.count) * Number(product.price)}

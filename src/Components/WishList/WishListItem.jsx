@@ -6,19 +6,19 @@ export const WishListItem = ({ product }) => {
       <div className="wish-product">
         <div className="card card-shopping">
           <img src={product.imageUrl} alt="" className="card-img" />
-          <h4 className="card-brand">{product.brandName}</h4>
-          <p className="card-desc">{product.description}</p>
-          <p className="card-desc">Count:{product.count}</p>
+          <h4 className="card-brand">{product.name}</h4>
+          {/* <p className="card-desc">{product.description}</p> */}
+          {/* <p className="card-desc">Count:{product.count}</p> */}
           <p className="card-desc">Rs {product.price}</p>
           <button
             onClick={async() => {
               setToast("true");
-              setToastMessage(`${product.brandName} removed from wish list`);
+              setToastMessage(`${product.name} removed from wish list`);
               // const response = await axios.delete(`/api/wishes/${product.id}`);
               // console.log({response})
               dispatch({
                 type: Actions.REMOVE_FROM_WISHLIST,
-                payload: product.id,
+                payload: product._id,
               });
             }}
             className="card-remove button button-border"
@@ -29,10 +29,10 @@ export const WishListItem = ({ product }) => {
             className="button button-primary"
             onClick={() => {
               setToast("true");
-              setToastMessage(`${product.brandName} is added to Cart`);
+              setToastMessage(`${product.name} is added to Cart`);
               dispatch({
                 type: Actions.MOVE_TO_CART_FROM_WISHLIST,
-                payload: { id: product.id, count: product.count },
+                payload: { id: product._id, count: product.count },
               });
             }}
           >

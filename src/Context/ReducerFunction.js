@@ -117,16 +117,16 @@ export const reducerFunction = (state, action) => {
 
 function addToCart({ idFromCartClick, productItems, cartItems }) {
   const productIndex = productItems.findIndex(
-    (product) => product.id === idFromCartClick
+    (product) => product._id === idFromCartClick
   );
   const foundInCart = cartItems.findIndex(
-    (product) => product.id === idFromCartClick
+    (product) => product._id === idFromCartClick
   );
   if (foundInCart === -1) {
     return [...cartItems, { ...productItems[productIndex], count: 1 }];
   }
   let allItems = cartItems.map((item) =>
-    item.id === idFromCartClick
+    item._id === idFromCartClick
       ? { ...item, count: item.count + 1 }
       : { ...item }
   );
@@ -135,22 +135,22 @@ function addToCart({ idFromCartClick, productItems, cartItems }) {
 
 function addToWishList({ idFromWishListClick, wishItems, productItems }) {
   const productIndex = productItems.findIndex(
-    (product) => product.id === idFromWishListClick
+    (product) => product._id === idFromWishListClick
   );
   const foundInWishList = wishItems.findIndex(
-    (product) => product.id === idFromWishListClick
+    (product) => product._id === idFromWishListClick
   );
   if (foundInWishList === -1) {
     return [...wishItems, { ...productItems[productIndex], count: 1 }];
   }
   let allItems = [...wishItems];
-  const index = allItems.findIndex((item) => item.id === idFromWishListClick);
+  const index = allItems.findIndex((item) => item._id === idFromWishListClick);
   allItems[index].count += 1;
   return allItems.filter((item) => item.count > 0);
 }
 function removeFromWishList({ idFromRemoveClick, wishItems }) {
   let allItems = [...wishItems];
-  const index = allItems.findIndex((item) => item.id === idFromRemoveClick);
+  const index = allItems.findIndex((item) => item._id === idFromRemoveClick);
   allItems[index].count = 0;
 
   return allItems.filter((item) => item.count > 0);
@@ -163,10 +163,10 @@ function moveToCart({
   cartItems,
 }) {
   const productIndex = products.findIndex(
-    (product) => product.id === idFromWishList
+    (product) => product._id === idFromWishList
   );
   const foundInCart = cartItems.findIndex(
-    (product) => product.id === idFromWishList
+    (product) => product._id === idFromWishList
   );
   if (foundInCart === -1) {
     return [
@@ -178,7 +178,7 @@ function moveToCart({
     ];
   }
   const allItems = cartItems.map((item) =>
-    item.id === idFromWishList
+    item._id === idFromWishList
       ? { ...item, count: item.count + countFromWishList }
       : { ...item }
   );
@@ -191,10 +191,10 @@ function moveToWishList({
   wishItems,
 }) {
   const productIndex = products.findIndex(
-    (product) => product.id === idFromCart
+    (product) => product._id === idFromCart
   );
   const foundInCart = wishItems.findIndex(
-    (product) => product.id === idFromCart
+    (product) => product._id === idFromCart
   );
   if (foundInCart === -1) {
     return [
@@ -206,7 +206,7 @@ function moveToWishList({
     ];
   }
   let allItems = wishItems.map((item) =>
-    item.id === idFromCart
+    item._id === idFromCart
       ? { ...item, count: item.count + countFromCart }
       : { ...item }
   );
@@ -215,7 +215,7 @@ function moveToWishList({
 
 function removeFromCart({ idFromRemoveCart, cartItems }) {
   let allItems = [...cartItems];
-  let index = allItems.findIndex((item) => item.id === idFromRemoveCart);
+  let index = allItems.findIndex((item) => item._id === idFromRemoveCart);
   allItems[index].count = 0;
 
   return allItems.filter((item) => item.count > 0);
@@ -223,12 +223,12 @@ function removeFromCart({ idFromRemoveCart, cartItems }) {
 
 function increaseItem({ id, Items }) {
   return Items.map((item) =>
-    item.id === id ? { ...item, count: item.count + 1 } : { ...item }
+    item._id === id ? { ...item, count: item.count + 1 } : { ...item }
   );
 }
 function removeOneItem({ id, Items }) {
   let allItems = Items.map((item) =>
-    item.id === id ? { ...item, count: item.count - 1 } : { ...item }
+    item._id === id ? { ...item, count: item.count - 1 } : { ...item }
   );
 
   return allItems.filter((item) => item.count > 0);

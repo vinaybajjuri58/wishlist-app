@@ -16,7 +16,7 @@ export const ProductItem = ({ product }) => {
   return (
     <div className="product">
       <div className="card card-shopping">
-        <img src={product.url} alt="" className="card-img" />
+        <img src={product.imageUrl} alt="" className="card-img" />
         <h4 className="card-brand">{product.brandName}</h4>
         <p className="card-desc">{product.description}</p>
         <p className="card-desc">Rs {product.price}</p>

@@ -5,7 +5,7 @@ export const WishListItem = ({ product }) => {
     return (
       <div className="wish-product">
         <div className="card card-shopping">
-          <img src={product.url} alt="" className="card-img" />
+          <img src={product.imageUrl} alt="" className="card-img" />
           <h4 className="card-brand">{product.brandName}</h4>
           <p className="card-desc">{product.description}</p>
           <p className="card-desc">Count:{product.count}</p>

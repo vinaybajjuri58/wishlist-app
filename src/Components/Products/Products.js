@@ -3,6 +3,8 @@ import { useData } from "../../Context";
 import { Actions } from "../../Context";
 import axios from "axios";
 import { ProductItem } from "./ProductItem.jsx";
+import { dispatchFunc } from "./filterReducer";
+import { sortData, filterData, searchData } from "./util";
 
 export const Products = () => {
   const { state, dispatch } = useData();
@@ -24,21 +26,6 @@ export const Products = () => {
     })();
   }, [dispatch]);
 
-  const dispatchFunc = (state, action) => {
-    switch (action.type) {
-      case "SORTBY":
-        return { ...state, sortBy: action.payload };
-      case "FILTER_SPEED_DEIVERY":
-        return { ...state, fastDelivery: !state.fastDelivery };
-      case "FILTER_IN_STOCK":
-        return { ...state, inStock: !state.inStock };
-      case "SEARCH_TEXT":
-        return { ...state, searchText: action.payload };
-      default:
-        return state;
-    }
-  };
-
   const [
     { sortBy, fastDelivery, inStock, searchText },
     filterDispatch,
@@ -48,42 +35,6 @@ export const Products = () => {
     inStock: false,
     searchText: "",
   });
-
-  const sortData = (data, sortBy) => {
-    if (sortBy && sortBy === "SORT_LOW_TO_HIGH") {
-      return data.sort((a, b) => {
-        return a.price - b.price;
-      });
-    }
-    if (sortBy && sortBy === "SORT_HIGH_TO_LOW") {
-      return data.sort((a, b) => {
-        return b.price - a.price;
-      });
-    }
-    return data;
-  };
-  const filterData = (data, fastDelivery) => {
-    let filteredData = [...data];
-    if (fastDelivery) {
-      filteredData = filteredData.filter(
-        (product) => product.speedDelivery === fastDelivery
-      );
-    }
-    if (inStock) {
-      filteredData = filteredData.filter(
-        (product) => product.inStock === inStock
-      );
-    }
-    return filteredData;
-  };
-  const searchData = (data, searchText) => {
-    if (searchText.length > 0) {
-      return data.filter((product) =>
-        product.brandName.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-    return data;
-  };
 
   const sortedData = sortData(state.products, sortBy);
   const filteredData = filterData(sortedData, fastDelivery, inStock);

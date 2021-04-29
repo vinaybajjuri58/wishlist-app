@@ -1,5 +1,5 @@
 import { useData, Actions } from "../../Context";
-import {removeCartItem} from "./serverCalls"
+import {removeCartItem,moveToWish} from "./serverCalls"
 export const CartItem = ({ product }) => {
   const { dispatch, setToast, setToastMessage } = useData();
   return (
@@ -9,16 +9,15 @@ export const CartItem = ({ product }) => {
         <div className="card-text-content" >
           <h4 className="card-brand">{product.name}</h4>
           <p className="card-desc">Rs {product.price}</p>
-          <p className="card-desc">Count: {product.count}</p>
+          <p className="card-desc">Quantity: {product.quantity}</p>
           <button
-            onClick={async() => {
+            onClick={async () => {
               setToast("true");
               setToastMessage(`${product.name} is being removed from Cart`);
-              const response = await removeCartItem({productId:product._id});
-              console.log({response})
-              dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id });
+              const {data:{cartItem}} = await removeCartItem({productId:product._id});
               setToast("true");
-              setToastMessage(`${product.name} is removed from Cart`);
+              setToastMessage(`${product.name} is being removed from Cart`);
+              dispatch({ type: Actions.REMOVE_FROM_CART, payload: cartItem._id });
             }}
             className="card-remove buton button-border border-warning icon-button"
           >
@@ -26,8 +25,11 @@ export const CartItem = ({ product }) => {
           </button>
           <button
             className="button button-primary"
-            onClick={ () => {
-
+            onClick={ async () => {
+              setToast("true");
+              setToastMessage(`${product.name} being moved to wish`);
+              const response = await moveToWish({productId:product._id});
+              console.log({response})
               setToast("true");
               setToastMessage(`${product.name} moved to wish`);
               dispatch({

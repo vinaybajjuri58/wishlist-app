@@ -38,7 +38,7 @@ const PricingDisplay = () => {
   useEffect(() => {
     const totalCost = state.cartProducts.reduce(
       (cumulative, current) =>
-        cumulative + Number(current.count) * Number(current.price),
+        cumulative + Number(current.quantity) * Number(current.price),
       0
     );
     setTotalPrice(totalCost);
@@ -51,8 +51,8 @@ const PricingDisplay = () => {
         {state.cartProducts.map((product) => (
           <div className="price" key={product._id}>
             <p>
-              {product.brandName} * {product.count} ={" "}
-              {Number(product.count) * Number(product.price)}
+              {product.brandName} * {product.quantity} ={" "}
+              {Number(product.quantity) * Number(product.price)}
             </p>
           </div>
         ))}

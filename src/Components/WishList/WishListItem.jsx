@@ -1,5 +1,5 @@
 import { useData, Actions } from "../../Context";
-// import axios from "axios";
+import {removeWishItem} from "./serverCalls"
 export const WishListItem = ({ product }) => {
     const { dispatch, setToast, setToastMessage } = useData();
     return (
@@ -10,16 +10,19 @@ export const WishListItem = ({ product }) => {
             <h4 className="card-brand">{product.name}</h4>
             <p className="card-desc">Rs {product.price}</p>
             <button
-              onClick={async() => {
-                setToast("true");
-                setToastMessage(`${product.name} removed from wish list`);
-                // const response = await axios.delete(`/api/wishes/${product.id}`);
-                // console.log({response})
-                dispatch({
-                  type: Actions.REMOVE_FROM_WISHLIST,
-                  payload: product._id,
-                });
-              }}
+              onClick={
+                async() => {
+                  setToast("true");
+                  setToastMessage(`${product.name} being removed from  wishlist`);
+                  const {data:{wishlistItem}} = await removeWishItem({productId:product._id});
+                  setToast("true");
+                  setToastMessage(`${product.name} removed from  wishlist`);
+                  dispatch({
+                    type: Actions.REMOVE_FROM_WISHLIST,
+                    payload: wishlistItem._id,
+                  });
+                }
+              }
               className="card-remove button button-border"
             >
               X

@@ -38,7 +38,7 @@ export const reducerFunction = (state, action) => {
         ...state,
         cartProducts: moveToCart({
           idFromWishList: action.payload.id,
-          countFromWishList: action.payload.count,
+          quantityFromWishList: action.payload.quantity,
           products: state.products,
           cartItems: state.cartProducts,
         }),
@@ -106,14 +106,14 @@ function addToCart({ idFromCartClick, productItems, cartItems }) {
     (product) => product._id === idFromCartClick
   );
   if (foundInCart === -1) {
-    return [...cartItems, { ...productItems[productIndex], count: 1 }];
+    return [...cartItems, { ...productItems[productIndex], quantity: 1 }];
   }
   let allItems = cartItems.map((item) =>
     item._id === idFromCartClick
-      ? { ...item, count: item.count + 1 }
+      ? { ...item, quantity: item.quantity + 1 }
       : { ...item }
   );
-  return allItems.filter((item) => item.count > 0);
+  return allItems.filter((item) => item.quantity > 0);
 }
 
 function addToWishList({ idFromWishListClick, wishItems, productItems }) {
@@ -134,7 +134,7 @@ function removeFromWishList({ idFromRemoveClick, wishItems }) {
 
 function moveToCart({
   idFromWishList,
-  countFromWishList = 1,
+  quantityFromWishList = 1,
   products,
   cartItems,
 }) {
@@ -149,16 +149,16 @@ function moveToCart({
       ...cartItems,
       {
         ...products[productIndex],
-        count: countFromWishList,
+        quantity: quantityFromWishList,
       },
     ];
   }
   const allItems = cartItems.map((item) =>
     item._id === idFromWishList
-      ? { ...item, count: item.count + countFromWishList }
+      ? { ...item, quantity: item.quantity + quantityFromWishList }
       : { ...item }
   );
-  return allItems.filter((item) => item.count > 0);
+  return allItems.filter((item) => item.quantity > 0);
 }
 function moveToWishList({ idFromCart, products, wishItems }) {
   const productIndex = products.findIndex(
@@ -181,20 +181,20 @@ function moveToWishList({ idFromCart, products, wishItems }) {
 function removeFromCart({ idFromRemoveCart, cartItems }) {
   let allItems = [...cartItems];
   let index = allItems.findIndex((item) => item._id === idFromRemoveCart);
-  allItems[index].count = 0;
+  allItems[index].quantity = 0;
 
-  return allItems.filter((item) => item.count > 0);
+  return allItems.filter((item) => item.quantity > 0);
 }
 
 function increaseItem({ id, Items }) {
   return Items.map((item) =>
-    item._id === id ? { ...item, count: item.count + 1 } : { ...item }
+    item._id === id ? { ...item, quantity: item.quantity + 1 } : { ...item }
   );
 }
 function removeOneItem({ id, Items }) {
   let allItems = Items.map((item) =>
-    item._id === id ? { ...item, count: item.count - 1 } : { ...item }
+    item._id === id ? { ...item, quantity: item.quantity - 1 } : { ...item }
   );
 
-  return allItems.filter((item) => item.count > 0);
+  return allItems.filter((item) => item.quantity > 0);
 }

@@ -1,17 +1,8 @@
 import { Actions,useData } from "../../Context";
 import {addToWish,addToCart,removeCartItem,removeWishItem} from "./serverCalls"
+import {inCartProducts,inWishProducts} from "../utils";
 export const ProductItem = ({ product }) => {
   const { dispatch, setToast, setToastMessage, state } = useData();
-  const inCartProducts = (_id) => {
-    return state.cartProducts.findIndex((item) => item._id === _id) === -1
-      ? false
-      : true;
-  };
-  const inWishProducts = (_id) => {
-    return state.wishProducts.findIndex((item) => item._id === _id) === -1
-      ? false
-      : true;
-  };
 
   return (
     <div className="product">
@@ -21,7 +12,7 @@ export const ProductItem = ({ product }) => {
         <h4 className="card-brand">{product.name}</h4>
         <p className="card-desc">Rs {product.price}</p>
 
-        {inWishProducts(product._id) ? (
+        {inWishProducts({id:product._id,wishItems:state.wishProducts}) ? (
           <button
             onClick={async() => {
               setToast("true");
@@ -54,7 +45,7 @@ export const ProductItem = ({ product }) => {
           </button>
         )}
 
-        {inCartProducts(product._id) ? (
+        {inCartProducts({id:product._id,cartItems:state.cartProducts }) ? (
           <button
             onClick={async () => {
               setToast("true");

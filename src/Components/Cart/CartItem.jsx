@@ -1,7 +1,8 @@
 import { useData, Actions } from "../../Context";
-import {removeCartItem,moveToWish} from "./serverCalls"
+import {removeCartItem,moveToWish,updateQuantity} from "./serverCalls"
+import {inWishProducts} from "../utils"
 export const CartItem = ({ product }) => {
-  const { dispatch, setToast, setToastMessage } = useData();
+  const {state, dispatch, setToast, setToastMessage } = useData();
   return (
     <div className="wish-product">
       <div className="card card-shopping">
@@ -26,16 +27,32 @@ export const CartItem = ({ product }) => {
           <button
             className="button button-primary"
             onClick={ async () => {
-              setToast("true");
-              setToastMessage(`${product.name} being moved to wish`);
-              const response = await moveToWish({productId:product._id});
-              console.log({response})
-              setToast("true");
-              setToastMessage(`${product.name} moved to wish`);
-              dispatch({
-                type: Actions.MOVE_TO_WISHLIST_FROM_CART,
-                payload: { id: product._id, count: product.count },
-              });
+              if(inWishProducts({id:product._id,wishItems:state.wishProducts})){
+                const {data:{cartItem,success}} = await removeCartItem({productId:product._id});
+                if(success){
+                  setToast("true");
+                  setToastMessage(`${product.name} removed from cart`);
+                  dispatch({
+                    type: Actions.REMOVE_FROM_CART,
+                    payload: cartItem._id,
+                  });
+                }
+                else{
+                  setToast("false");
+                  setToastMessage("Error occured in removing product")
+                }
+              }
+              else{
+                setToast("true");
+                setToastMessage(`${product.name} being moved to wish`);
+                const {data:{cartItem}} = await moveToWish({productId:product._id});
+                setToast("true");
+                setToastMessage(`${product.name} moved to wish`);
+                dispatch({
+                  type: Actions.MOVE_TO_WISHLIST_FROM_CART,
+                  payload: { id: cartItem._id, count: product.count },
+                });
+              }
             }}
           >
             Move To Wish
@@ -49,10 +66,11 @@ export const CartItem = ({ product }) => {
         >
           <button
             className="button button-border border-primary"
-            onClick={() => {
+            onClick={async() => {
+              const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity+1});
               dispatch({
                 type: Actions.INCREASE_ITEM_IN_CART,
-                payload: product._id,
+                payload: cartItem._id,
               });
             }}
           >
@@ -60,10 +78,11 @@ export const CartItem = ({ product }) => {
           </button>
           <button
             className="button button-border border-primary"
-            onClick={() => {
+            onClick={async() => {
+              const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity-1});
               dispatch({
                 type: Actions.DECREASE_ITEM_IN_CART,
-                payload: product._id,
+                payload: cartItem._id,
               });
             }}
           >
@@ -75,3 +94,31 @@ export const CartItem = ({ product }) => {
     </div>
   );
 };
+
+// {
+//   setToast("true");
+//   setToastMessage(`${product.name} is being added to Cart`);
+//   if(inCartProducts({id:product._id,cartItems:state.cartProducts})){
+//     const {data:{wishlistItem,success}} = await removeWishItem({productId:product._id});
+//     if(success){
+//       setToast("true");
+//       setToastMessage(`${product.name} removed from  wishlist`);
+//       dispatch({
+//         type: Actions.REMOVE_FROM_WISHLIST,
+//         payload: wishlistItem._id,
+//       });
+//     }
+//     else{
+//       setToast("false");
+//       setToastMessage("Error occured in removing product")
+//     }
+//   }
+//   else{
+//     const response =  await moveToCart({productId:product._id}) ;
+//     console.log({response})
+//     dispatch({
+//       type: Actions.MOVE_TO_CART_FROM_WISHLIST,
+//       payload: { id: product._id, count: 1 },
+//     });
+//   } 
+// }

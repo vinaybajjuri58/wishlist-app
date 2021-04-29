@@ -1,7 +1,8 @@
 import { useData, Actions } from "../../Context";
-import {removeWishItem} from "./serverCalls"
+import {removeWishItem,moveToCart} from "./serverCalls"
+import {inCartProducts} from "../utils"
 export const WishListItem = ({ product }) => {
-    const { dispatch, setToast, setToastMessage } = useData();
+    const { state,dispatch, setToast, setToastMessage } = useData();
     return (
       <div className="wish-product">
         <div className="card card-shopping card-height">
@@ -14,13 +15,19 @@ export const WishListItem = ({ product }) => {
                 async() => {
                   setToast("true");
                   setToastMessage(`${product.name} being removed from  wishlist`);
-                  const {data:{wishlistItem}} = await removeWishItem({productId:product._id});
-                  setToast("true");
-                  setToastMessage(`${product.name} removed from  wishlist`);
-                  dispatch({
-                    type: Actions.REMOVE_FROM_WISHLIST,
-                    payload: wishlistItem._id,
-                  });
+                  const {data:{wishlistItem,success}} = await removeWishItem({productId:product._id});
+                  if(success){
+                    setToast("true");
+                    setToastMessage(`${product.name} removed from  wishlist`);
+                    dispatch({
+                      type: Actions.REMOVE_FROM_WISHLIST,
+                      payload: wishlistItem._id,
+                    });
+                  }
+                  else{
+                    setToast("false");
+                    setToastMessage("Error occured in removing product")
+                  }
                 }
               }
               className="card-remove button button-border"
@@ -29,13 +36,31 @@ export const WishListItem = ({ product }) => {
             </button>
             <button
             className="button button-primary"
-            onClick={() => {
+            onClick={async () => {
               setToast("true");
-              setToastMessage(`${product.name} is added to Cart`);
-              dispatch({
-                type: Actions.MOVE_TO_CART_FROM_WISHLIST,
-                payload: { id: product._id, count: product.count },
-              });
+              setToastMessage(`${product.name} is being added to Cart`);
+              if(inCartProducts({id:product._id,cartItems:state.cartProducts})){
+                const {data:{wishlistItem,success}} = await removeWishItem({productId:product._id});
+                if(success){
+                  setToast("true");
+                  setToastMessage(`${product.name} removed from  wishlist`);
+                  dispatch({
+                    type: Actions.REMOVE_FROM_WISHLIST,
+                    payload: wishlistItem._id,
+                  });
+                }
+                else{
+                  setToast("false");
+                  setToastMessage("Error occured in removing product")
+                }
+              }
+              else{
+                const {data:{cartItem}} =  await moveToCart({productId:product._id});
+                dispatch({
+                  type: Actions.MOVE_TO_CART_FROM_WISHLIST,
+                  payload: { id: cartItem._id, count: 1 },
+                });
+              } 
             }}
           >
             Move To Cart
@@ -45,34 +70,3 @@ export const WishListItem = ({ product }) => {
       </div>
     );
   };
-
-  // <div
-  //           style={{
-  //             display: "flex",
-  //             justifyContent: "center",
-  //             alignItems: "center",
-  //           }}
-  //         >
-  //           <button
-  //             className="button button-border border-primary"
-  //             onClick={() => {
-  //               dispatch({
-  //                 type: Actions.INCREASE_ITEM_IN_WISHLIST,
-  //                 payload: product.id,
-  //               });
-  //             }}
-  //           >
-  //             +
-  //           </button>
-  //           <button
-  //             className="button button-border border-primary"
-  //             onClick={() => {
-  //               dispatch({
-  //                 type: Actions.DECREASE_ITEM_IN_WISHLIST,
-  //                 payload: product.id,
-  //               });
-  //             }}
-  //           >
-  //             -
-  //           </button>
-  //         </div>

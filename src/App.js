@@ -18,7 +18,6 @@ const App = () => {
           type: Actions.SET_PRODUCTS_DATA,
           payload: products.products,
         });
-        // console.log({ products });
       } catch (err) {
         console.log({ err });
       }
@@ -34,7 +33,6 @@ const App = () => {
           type: Actions.SET_CART_DATA,
           payload: data.cartItems,
         });
-        console.log(data.cartItems);
       } catch (err) {
         console.log({ err });
       }
@@ -50,7 +48,6 @@ const App = () => {
           type: Actions.SET_WISHLIST_DATA,
           payload: data.wishlistItems,
         });
-        console.log(data.wishlistItems);
       } catch (err) {
         console.log({ err });
       }

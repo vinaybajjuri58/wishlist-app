@@ -1,7 +1,13 @@
 import axios from "axios";
-// const updateQuantity = async ({ productId, quantity }) => {
-
-// };
+export const updateQuantity = async ({ productId, quantity }) => {
+  const response = await axios.post(
+    `https://ecom-backend-deploy.herokuapp.com/api/cart/${productId}`,
+    {
+      quantity: quantity,
+    }
+  );
+  return response;
+};
 export const moveToWish = async ({ productId }) => {
   const {
     data: { wishlistItem },

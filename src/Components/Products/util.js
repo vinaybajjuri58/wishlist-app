@@ -30,7 +30,7 @@ export const filterData = (data, fastDelivery, inStock) => {
 export const searchData = (data, searchText) => {
   if (searchText.length > 0) {
     return data.filter((product) =>
-      product.brandName.toLowerCase().includes(searchText.toLowerCase())
+      product.name.toLowerCase().includes(searchText.toLowerCase())
     );
   }
   return data;

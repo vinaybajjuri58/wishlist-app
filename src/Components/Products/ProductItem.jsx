@@ -1,5 +1,5 @@
-// import axios from "axios";
 import { Actions,useData } from "../../Context";
+import {addToWish,addToCart,removeCartItem,removeWishItem} from "./serverCalls"
 export const ProductItem = ({ product }) => {
   const { dispatch, setToast, setToastMessage, state } = useData();
   const inCartProducts = (_id) => {
@@ -15,46 +15,54 @@ export const ProductItem = ({ product }) => {
 
   return (
     <div className="product">
-      <div className="card card-shopping">
+      <div className="card card-shopping card-height" >
         <img src={product.imageUrl} alt="" className="card-img" />
+        <div className="card-text-content" >
         <h4 className="card-brand">{product.name}</h4>
         <p className="card-desc">Rs {product.price}</p>
 
         {inWishProducts(product._id) ? (
-          <span
+          <button
             onClick={async() => {
+              setToast("true");
+              setToastMessage(`${product.name} being removed from  wishlist`);
+              const {data:{wishlistItem}} = await removeWishItem({productId:product._id});
               setToast("true");
               setToastMessage(`${product.name} removed from  wishlist`);
               dispatch({
                 type: Actions.REMOVE_FROM_WISHLIST,
-                payload: product._id,
+                payload: wishlistItem._id,
               });
             }}
-            className="wish-button"
-            role="button"
+            className="card-remove icon-button"
           >
             <i class="fas fa-heart"></i>
-          </span>
+          </button>
         ) : (
-          <span
+          <button
             onClick={async () => {
               setToast("true");
+              setToastMessage(`${product.name} is being added to wishlist`);
+              const {data:{wishlistItem}} = await addToWish({productId:product._id});
+              setToast("true");
               setToastMessage(`${product.name} is added to wishlist`);
-              dispatch({ type: Actions.ADD_TO_WISHLIST, payload: product._id });
+              dispatch({ type: Actions.ADD_TO_WISHLIST, payload: wishlistItem._id });
             }}
-            className="wish-button"
-            role="button"
+            className="card-remove icon-button"
           >
             <i class="far fa-heart"></i>
-          </span>
+          </button>
         )}
 
         {inCartProducts(product._id) ? (
           <button
             onClick={async () => {
               setToast("true");
-              setToastMessage(`${product.name} is removed from Cart`);
-              dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id });
+              setToastMessage(`${product.name} is being removed from Cart`);
+              const {data:{cartItem}} = await removeCartItem({productId:product._id});
+              setToast("true");
+              setToastMessage(`${product.name} is being removed from Cart`);
+              dispatch({ type: Actions.REMOVE_FROM_CART, payload: cartItem._id });
             }}
             className="button button-primary"
           >
@@ -64,14 +72,18 @@ export const ProductItem = ({ product }) => {
           <button
             onClick={async() => {
               setToast("true");
-              setToastMessage(`${product.name} is added to Cart`);
-              dispatch({ type: Actions.ADD_TO_CART, payload: product._id });
+              setToastMessage(`${product.name} is being added to Cart`);
+              const {data:{cartItem}} = await addToCart({productId:product._id});
+              setToast("true");
+              setToastMessage(`${product.name} is  added to Cart`);
+              dispatch({ type: Actions.ADD_TO_CART, payload: cartItem._id });
             }}
             className="button button-primary"
           >
             ADD TO CART
           </button>
         )}
+        </div>
       </div>
     </div>
   );

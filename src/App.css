@@ -37,6 +37,9 @@ nav {
   font-size: 1rem;
   left: 2.5rem;
 }
+.card-height {
+  height: 410px;
+}
 
 .navigation {
   display: flex;
@@ -69,17 +72,6 @@ nav {
   height: 2rem;
   top: 275px;
 }
-.wish-button {
-  display: block;
-  position: absolute;
-  right: 0.75rem;
-  top: 0.5rem;
-}
-
-/* .cart-section {
-  display: flex;
-  flex-direction: column;
-} */
 
 @media only screen and (max-width: 768px) {
   .products-list {

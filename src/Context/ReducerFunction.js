@@ -52,7 +52,6 @@ export const reducerFunction = (state, action) => {
         ...state,
         wishProducts: moveToWishList({
           idFromCart: action.payload.id,
-          countFromCart: action.payload.count,
           products: state.products,
           wishItems: state.wishProducts,
         }),
@@ -76,22 +75,6 @@ export const reducerFunction = (state, action) => {
         cartProducts: removeFromCart({
           idFromRemoveCart: action.payload,
           cartItems: state.cartProducts,
-        }),
-      };
-    case Actions.INCREASE_ITEM_IN_WISHLIST:
-      return {
-        ...state,
-        wishProducts: increaseItem({
-          id: action.payload,
-          Items: state.wishProducts,
-        }),
-      };
-    case Actions.DECREASE_ITEM_IN_WISHLIST:
-      return {
-        ...state,
-        wishProducts: removeOneItem({
-          id: action.payload,
-          Items: state.wishProducts,
         }),
       };
     case Actions.INCREASE_ITEM_IN_CART:
@@ -141,19 +124,12 @@ function addToWishList({ idFromWishListClick, wishItems, productItems }) {
     (product) => product._id === idFromWishListClick
   );
   if (foundInWishList === -1) {
-    return [...wishItems, { ...productItems[productIndex], count: 1 }];
+    return [...wishItems, { ...productItems[productIndex] }];
   }
-  let allItems = [...wishItems];
-  const index = allItems.findIndex((item) => item._id === idFromWishListClick);
-  allItems[index].count += 1;
-  return allItems.filter((item) => item.count > 0);
+  return wishItems;
 }
 function removeFromWishList({ idFromRemoveClick, wishItems }) {
-  let allItems = [...wishItems];
-  const index = allItems.findIndex((item) => item._id === idFromRemoveClick);
-  allItems[index].count = 0;
-
-  return allItems.filter((item) => item.count > 0);
+  return wishItems.filter((item) => item._id !== idFromRemoveClick);
 }
 
 function moveToCart({
@@ -184,33 +160,22 @@ function moveToCart({
   );
   return allItems.filter((item) => item.count > 0);
 }
-function moveToWishList({
-  idFromCart,
-  countFromCart = 1,
-  products,
-  wishItems,
-}) {
+function moveToWishList({ idFromCart, products, wishItems }) {
   const productIndex = products.findIndex(
     (product) => product._id === idFromCart
   );
-  const foundInCart = wishItems.findIndex(
+  const foundInWishList = wishItems.findIndex(
     (product) => product._id === idFromCart
   );
-  if (foundInCart === -1) {
+  if (foundInWishList === -1) {
     return [
       ...wishItems,
       {
         ...products[productIndex],
-        count: countFromCart,
       },
     ];
   }
-  let allItems = wishItems.map((item) =>
-    item._id === idFromCart
-      ? { ...item, count: item.count + countFromCart }
-      : { ...item }
-  );
-  return allItems.filter((item) => item.count > 0);
+  return wishItems;
 }
 
 function removeFromCart({ idFromRemoveCart, cartItems }) {

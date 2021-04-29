@@ -1,41 +1,44 @@
 import { useData, Actions } from "../../Context";
-// import axios from "axios"
+import {removeCartItem} from "./serverCalls"
 export const CartItem = ({ product }) => {
   const { dispatch, setToast, setToastMessage } = useData();
   return (
     <div className="wish-product">
       <div className="card card-shopping">
         <img src={product.imageUrl} alt="" className="card-img" />
-        <h4 className="card-brand">{product.name}</h4>
-        <p className="card-desc">{product.description}</p>
-        <p className="card-desc">Rs {product.price}</p>
-        <p className="card-desc">Count: {product.count}</p>
-        <button
-          onClick={async() => {
-            setToast("true");
-            setToastMessage(`${product.name} removed from Cart`);
-            // const response = await axios.delete(`/api/carts/${product.id}`);
-            // console.log({response})
-            dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id });
-          }}
-          className="card-remove button button-border"
-        >
-          X
-        </button>
-        <button
-          className="button button-primary"
-          onClick={() => {
-            setToast("true");
-            setToastMessage(`${product.name} moved to wish`);
-            dispatch({
-              type: Actions.MOVE_TO_WISHLIST_FROM_CART,
-              payload: { id: product._id, count: product.count },
-            });
-          }}
-        >
-          Move To Wish
-        </button>
-        <div
+        <div className="card-text-content" >
+          <h4 className="card-brand">{product.name}</h4>
+          <p className="card-desc">Rs {product.price}</p>
+          <p className="card-desc">Count: {product.count}</p>
+          <button
+            onClick={async() => {
+              setToast("true");
+              setToastMessage(`${product.name} is being removed from Cart`);
+              const response = await removeCartItem({productId:product._id});
+              console.log({response})
+              dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id });
+              setToast("true");
+              setToastMessage(`${product.name} is removed from Cart`);
+            }}
+            className="card-remove buton button-border border-warning icon-button"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <button
+            className="button button-primary"
+            onClick={ () => {
+
+              setToast("true");
+              setToastMessage(`${product.name} moved to wish`);
+              dispatch({
+                type: Actions.MOVE_TO_WISHLIST_FROM_CART,
+                payload: { id: product._id, count: product.count },
+              });
+            }}
+          >
+            Move To Wish
+          </button>
+          <div
           style={{
             display: "flex",
             justifyContent: "center",
@@ -64,6 +67,7 @@ export const CartItem = ({ product }) => {
           >
             -
           </button>
+        </div>
         </div>
       </div>
     </div>

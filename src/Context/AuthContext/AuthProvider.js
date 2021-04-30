@@ -4,7 +4,7 @@ import { reducerFunction } from "./ReducerFunction";
 
 export const AuthProvider = ({ children }) => {
   const [authState, authDispatch] = useReducer(reducerFunction, {
-    isLoggedIn: true,
+    isLoggedIn: false,
   });
   return (
     <AuthContext.Provider value={{ authState, authDispatch }}>

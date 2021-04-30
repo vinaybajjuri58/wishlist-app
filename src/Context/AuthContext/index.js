@@ -1,2 +1,2 @@
 export { AuthProvider, useAuth } from "./AuthProvider";
-export * as AuthActions from "./ActionTypes";
+export * as AuthActionTypes from "./ActionTypes";

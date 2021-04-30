@@ -1,6 +1,6 @@
 import { Toast } from "./Components";
 import axios from "axios";
-import { useData, Actions } from "./Context";
+import { useData, Actions, useAuth } from "./Context";
 import "./App.css";
 import { Navbar } from "./Components/Navbar";
 import { RouterComponent } from "./Routes";
@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 const App = () => {
   const { toast, dispatch } = useData();
+  const { authState } = useAuth();
   useEffect(() => {
     (async () => {
       try {
@@ -24,35 +25,39 @@ const App = () => {
     })();
   }, [dispatch]);
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          `https://ecom-backend-deploy.herokuapp.com/api/cart`
-        );
-        dispatch({
-          type: Actions.SET_CART_DATA,
-          payload: data.cartItems,
-        });
-      } catch (err) {
-        console.log({ err });
-      }
-    })();
-  }, [dispatch]);
+    if (authState.isLoggedIn) {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `https://ecom-backend-deploy.herokuapp.com/api/cart`
+          );
+          dispatch({
+            type: Actions.SET_CART_DATA,
+            payload: data.cartItems,
+          });
+        } catch (err) {
+          console.log({ err });
+        }
+      })();
+    }
+  }, [dispatch, authState]);
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          `https://ecom-backend-deploy.herokuapp.com/api/wishlist`
-        );
-        dispatch({
-          type: Actions.SET_WISHLIST_DATA,
-          payload: data.wishlistItems,
-        });
-      } catch (err) {
-        console.log({ err });
-      }
-    })();
-  }, [dispatch]);
+    if (authState.isLoggedIn) {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `https://ecom-backend-deploy.herokuapp.com/api/wishlist`
+          );
+          dispatch({
+            type: Actions.SET_WISHLIST_DATA,
+            payload: data.wishlistItems,
+          });
+        } catch (err) {
+          console.log({ err });
+        }
+      })();
+    }
+  }, [dispatch, authState]);
 
   return (
     <div>

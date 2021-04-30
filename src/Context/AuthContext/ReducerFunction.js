@@ -1,6 +1,6 @@
 import * as AuthActions from "./ActionTypes";
 export const reducerFunction = (state, action) => {
-  switch (action.Type) {
+  switch (action.type) {
     case AuthActions.SET_LOGGED_IN:
       return {
         ...state,
@@ -11,8 +11,7 @@ export const reducerFunction = (state, action) => {
         ...state,
         isLoggedIn: false,
       };
-
     default:
-      break;
+      return state;
   }
 };

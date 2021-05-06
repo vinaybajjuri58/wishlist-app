@@ -16,6 +16,11 @@ export const reducerFunction = (state, action) => {
         ...state,
         cartProducts: action.payload,
       };
+    case Actions.SET_CATEGORIES_DATA:
+      return {
+        ...state,
+        categories: action.payload,
+      };
     case Actions.ADD_TO_WISHLIST:
       return {
         ...state,

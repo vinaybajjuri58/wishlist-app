@@ -38,7 +38,11 @@ nav {
   left: 2.5rem;
 }
 .card-height {
-  height: 410px;
+  height: 430px;
+}
+.button-position {
+  position: absolute;
+  bottom: 0rem;
 }
 
 .navigation {

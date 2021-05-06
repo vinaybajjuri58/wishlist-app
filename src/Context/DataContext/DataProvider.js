@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
     products: [],
     wishProducts: [],
     cartProducts: [],
+    categories: [],
   });
 
   return (

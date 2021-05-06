@@ -85,14 +85,14 @@ export const ProductItem = ({ product }) => {
         {inCartProducts({id:product._id,cartItems:state.cartProducts }) ? (
           <button
             onClick={removeFromCartHandler}
-            className="button button-primary"
+            className="button button-primary card-action button-position"
           >
             REMOVE FROM CART
           </button>
         ) : (
           <button
             onClick={addToCartHandler}
-            className="button button-primary"
+            className="button button-primary card-action button-position"
           >
             ADD TO CART
           </button>

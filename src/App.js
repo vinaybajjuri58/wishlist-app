@@ -58,6 +58,21 @@ const App = () => {
       })();
     }
   }, [dispatch, authState]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(
+          "https://ecom-backend-deploy.herokuapp.com/api/categories"
+        );
+        dispatch({
+          type: Actions.SET_CATEGORIES_DATA,
+          payload: data.categories,
+        });
+      } catch (err) {
+        console.log({ err });
+      }
+    })();
+  }, [dispatch]);
 
   return (
     <div>

@@ -3,12 +3,17 @@ import { useData } from "../../Context";
 import { ProductItem } from "./ProductItem.jsx";
 import { dispatchFunc } from "./filterReducer";
 import { sortData, filterData, searchData } from "./util";
+import { useParams } from "react-router-dom";
 
 export const Products = () => {
   const { state } = useData();
   useEffect(() => {
     document.title = "Products";
   }, []);
+  const { categoryId } = useParams();
+  const products = state.products.filter(
+    (product) => product.category === categoryId
+  );
 
   const [
     { sortBy, fastDelivery, inStock, searchText },
@@ -20,7 +25,7 @@ export const Products = () => {
     searchText: "",
   });
 
-  const sortedData = sortData(state.products, sortBy);
+  const sortedData = sortData(products, sortBy);
   const filteredData = filterData(sortedData, fastDelivery, inStock);
   const searchedData = searchData(filteredData, searchText);
 

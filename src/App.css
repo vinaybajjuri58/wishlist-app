@@ -7,12 +7,18 @@
 nav {
   height: 5rem;
   background-color: #9575cd;
-  margin-bottom: 1rem;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  top: 0rem;
 }
 .icons {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.routes-component {
+  margin-top: 5rem;
 }
 
 .wishlist-icon {
@@ -54,11 +60,11 @@ nav {
 
 .products-list {
   display: flex;
-  flex-basis: 350px;
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: flex-start;
   margin: 0 auto;
+  grid-area: products;
 }
 .product {
   position: relative;
@@ -126,9 +132,52 @@ nav {
   align-items: center;
   width: 300px;
 }
-@media only screen and (max-width: 768px) {
+.products-list-cart {
+  display: flex;
+  flex-direction: column;
+}
+.cart-ul {
+  display: flex;
+  flex-direction: column;
+}
+.total-price-container {
+  border: 2px solid black;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  align-self: center;
+  margin: 1rem;
+}
+.products-listing-page {
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-areas: "filters products";
+}
+.filters-container {
+  grid-area: filters;
+  position: fixed;
+}
+.input-styled {
+  width: 220px;
+}
+
+@media only screen and (max-width: 600px) {
   .products-list {
     justify-content: center;
     align-items: center;
+  }
+  .card-horizontal-shape {
+    height: auto;
+    width: auto;
+  }
+  .products-listing-page {
+    display: flex;
+    flex-direction: column;
+  }
+  .filters-container {
+    position: relative;
+    border: 1px solid black;
   }
 }

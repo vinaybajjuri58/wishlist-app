@@ -22,13 +22,13 @@ export const Cart = () => {
 const DisplayProducts = () => {
   const { state } = useData();
   return (
-    <div>
-      <ul className="products-list">
+    <div className="products-list-cart">
+      <PricingDisplay />
+      <ul className="products-list cart-ul">
         {state.cartProducts.map((item) => (
           <CartItem key={item._id} product={item} />
         ))}
       </ul>
-      <PricingDisplay />
     </div>
   );
 };
@@ -44,19 +44,8 @@ const PricingDisplay = () => {
     setTotalPrice(totalCost);
   }, [state.cartProducts]);
   return (
-    <div>
-      <p style={{ paddingLeft: "2.5rem" }}>Total Price :{totalPrice}</p>
-      <p style={{ paddingLeft: "2.5rem" }}>Price Breakdown : </p>
-      <ul className="list list-unstyled">
-        {state.cartProducts.map((product) => (
-          <div className="price" key={product._id}>
-            <p>
-              {product.brandName} * {product.quantity} ={" "}
-              {Number(product.quantity) * Number(product.price)}
-            </p>
-          </div>
-        ))}
-      </ul>
+    <div className="total-price-container">
+      <p>Total Price :{totalPrice}</p>
     </div>
   );
 };

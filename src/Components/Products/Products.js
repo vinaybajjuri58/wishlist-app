@@ -37,74 +37,80 @@ export const Products = ({ allproducts }) => {
   return (
     <div>
       {products.length > 0 ? (
-        <div>
-          <div>
-            <span className="text">Sort using price :</span>
-            <div>
+        <div className="products-listing-page">
+          <div className="filters-container">
+            <div className="search-container">
               <label>
-                <input
-                  type="radio"
-                  name="sort"
-                  onChange={() =>
-                    filterDispatch({
-                      type: "SORTBY",
-                      payload: "SORT_LOW_TO_HIGH",
-                    })
-                  }
-                  checked={sortBy && sortBy === "SORT_LOW_TO_HIGH"}
-                />
-                LOW TO HIGH
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="sort"
-                  onChange={() =>
-                    filterDispatch({
-                      type: "SORTBY",
-                      payload: "SORT_HIGH_TO_LOW",
-                    })
-                  }
-                  checked={sortBy && sortBy === "SORT_HIGH_TO_LOW"}
-                />
-                HIGH TO LOW
+                Search :
+                <div>
+                  <input
+                    className="input-styled"
+                    type="text"
+                    placeholder="search products with name"
+                    value={searchText}
+                    onChange={changeHandler}
+                  />
+                </div>
               </label>
             </div>
-          </div>
-          <div>
-            <span className="text">Filters : </span>
-            <label>
-              <input
-                type="checkbox"
-                name="Filter Delivery"
-                onChange={() =>
-                  filterDispatch({ type: "FILTER_SPEED_DEIVERY" })
-                }
-                checked={fastDelivery}
-              />
-              Fast Delivery
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                name="Filter inStock"
-                onChange={() => filterDispatch({ type: "FILTER_IN_STOCK" })}
-                checked={inStock}
-              />
-              In Stock
-            </label>
-          </div>
-          <div>
-            <label>
-              Search :
-              <input
-                className="input-styled"
-                type="text"
-                placeholder="search products with brandname"
-                value={searchText}
-                onChange={changeHandler}
-              />
-            </label>
+            <div>
+              <span className="text">Sort using price :</span>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <label>
+                  <input
+                    type="radio"
+                    name="sort"
+                    onChange={() =>
+                      filterDispatch({
+                        type: "SORTBY",
+                        payload: "SORT_LOW_TO_HIGH",
+                      })
+                    }
+                    checked={sortBy && sortBy === "SORT_LOW_TO_HIGH"}
+                  />
+                  LOW TO HIGH
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="sort"
+                    onChange={() =>
+                      filterDispatch({
+                        type: "SORTBY",
+                        payload: "SORT_HIGH_TO_LOW",
+                      })
+                    }
+                    checked={sortBy && sortBy === "SORT_HIGH_TO_LOW"}
+                  />
+                  HIGH TO LOW
+                </label>
+              </div>
+            </div>
+            <div>
+              <span className="text">Filters : </span>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="Filter Delivery"
+                    onChange={() =>
+                      filterDispatch({ type: "FILTER_SPEED_DEIVERY" })
+                    }
+                    checked={fastDelivery}
+                  />
+                  Fast Delivery
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="Filter inStock"
+                    onChange={() => filterDispatch({ type: "FILTER_IN_STOCK" })}
+                    checked={inStock}
+                  />
+                  In Stock
+                </label>
+              </div>
+            </div>
           </div>
           <ul className="products-list">
             {searchedData.length > 0 ? (

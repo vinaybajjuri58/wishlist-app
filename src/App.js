@@ -2,7 +2,6 @@ import { Toast } from "./Components";
 import axios from "axios";
 import { useData, Actions, useAuth } from "./Context";
 import "./App.css";
-import { Navbar } from "./Components/Navbar";
 import { RouterComponent } from "./Routes";
 import { useEffect } from "react";
 
@@ -76,7 +75,6 @@ const App = () => {
 
   return (
     <div>
-      <Navbar />
       <RouterComponent />
       {toast ? <Toast /> : <></>}
     </div>

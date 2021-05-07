@@ -13,6 +13,12 @@ export const Categories = () => {
             <p className="card-text">{item.description}</p>
           </div>
         ))}
+        <div className="category-box">
+          <Link to={`/products`}>
+            <h4 class="card-title">All Books</h4>
+          </Link>
+          <p className="card-text">Collection of all the books in the store</p>
+        </div>
       </ul>
     </div>
   );

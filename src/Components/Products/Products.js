@@ -5,15 +5,16 @@ import { dispatchFunc } from "./filterReducer";
 import { sortData, filterData, searchData } from "./util";
 import { useParams } from "react-router-dom";
 
-export const Products = () => {
+export const Products = ({ allproducts }) => {
   const { state } = useData();
   useEffect(() => {
     document.title = "Products";
   }, []);
   const { categoryId } = useParams();
-  const products = state.products.filter(
-    (product) => product.category === categoryId
-  );
+  const products =
+    allproducts === false
+      ? state.products.filter((product) => product.category === categoryId)
+      : state.products;
 
   const [
     { sortBy, fastDelivery, inStock, searchText },
@@ -111,9 +112,7 @@ export const Products = () => {
                 <ProductItem key={item._id} product={item} />
               ))
             ) : (
-              <h2 className="text text-large">
-                No products available with "{searchText}" brandname
-              </h2>
+              <h2 className="text text-large">No products available</h2>
             )}
           </ul>
         </div>

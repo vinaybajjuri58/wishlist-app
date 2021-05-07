@@ -83,13 +83,7 @@ export const Product = () => {
 
   if (product !== undefined) {
     return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="div-flex-center">
         <div className="card-horizontal card-horizontal-shape">
           <div className="card-content-img">
             <img src={product.imageUrl} alt="" className="card-img" />

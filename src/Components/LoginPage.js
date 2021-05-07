@@ -34,12 +34,13 @@ export const LoginPage = () => {
     }
   };
   return (
-    <div>
+    <div className="div-flex-center">
       <h2> Login Page </h2>
-      <div>
+      <div className="login-div-container">
         <label>
           <p>Email : </p>
           <input
+            className="input-styled"
             name="email"
             value={loginDetails.email}
             type="text"
@@ -49,6 +50,7 @@ export const LoginPage = () => {
         <label>
           <p>Password : </p>
           <input
+            className="input-styled"
             name="password"
             value={loginDetails.password}
             type="password"

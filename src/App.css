@@ -90,12 +90,25 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .link-style {
   text-decoration: none;
   font-size: 1.1rem;
   cursor: pointer;
   color: black;
+}
+.carousal-container {
+  padding: 0rem;
+  margin: 0rem;
+}
+.main {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 @media only screen and (max-width: 768px) {
   .products-list {

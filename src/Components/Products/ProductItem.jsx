@@ -1,6 +1,7 @@
 import { Actions,useData,useAuth } from "../../Context";
 import {addToWish,addToCart,removeCartItem,removeWishItem} from "./serverCalls"
 import {inCartProducts,inWishProducts} from "../utils";
+import { Link } from "react-router-dom";
 export const ProductItem = ({ product }) => {
   const { dispatch, setToast, setToastMessage, state } = useData()
   const {authState} = useAuth();
@@ -61,9 +62,11 @@ export const ProductItem = ({ product }) => {
   return (
     <div className="product">
       <div className="card card-shopping card-height" >
-        <img src={product.imageUrl} alt="" className="card-img" />
+        <img src={product.imageUrl} alt={product.name} className="card-img" />
         <div className="card-text-content" >
+        <Link className="link-style" to={`/product/${product._id}`} >
         <h4 className="card-brand">{product.name}</h4>
+        </Link>
         <p className="card-desc">Rs {product.price}</p>
 
         {inWishProducts({id:product._id,wishItems:state.wishProducts}) ? (

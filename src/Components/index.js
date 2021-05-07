@@ -4,3 +4,4 @@ export { Toast } from "./Toast";
 export { Cart } from "./Cart";
 export { LoginPage } from "./LoginPage";
 export { Main } from "./MainPage";
+export { Product } from "./ProductListing";

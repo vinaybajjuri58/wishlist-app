@@ -54,10 +54,12 @@ export const CartItem = ({ product }) => {
     });
   }
   return (
-    <div className="wish-product">
-      <div className="card card-shopping">
+    // <div className="wish-product">
+      <div className="card-horizontal card-horizontal-shape">
+        <div className="card-content-img" >
         <img src={product.imageUrl} alt="" className="card-img" />
-        <div className="card-text-content" >
+        </div>
+        <div className="card-content" >
           <h4 className="card-brand">{product.name}</h4>
           <p className="card-desc">Rs {product.price}</p>
           <p className="card-desc">Quantity: {product.quantity}</p>
@@ -68,7 +70,7 @@ export const CartItem = ({ product }) => {
             <i class="fas fa-trash-alt"></i>
           </button>
           <button
-            className="button button-primary"
+            className="button button-primary card-action "
             onClick={moveToWishHandler}
           >
             Move To Wish
@@ -95,7 +97,7 @@ export const CartItem = ({ product }) => {
         </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

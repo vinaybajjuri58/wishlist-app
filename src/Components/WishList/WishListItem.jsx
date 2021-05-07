@@ -62,7 +62,7 @@ export const WishListItem = ({ product }) => {
               X
             </button>
             <button
-            className="button button-primary"
+            className="button button-primary card-action button-position"
             onClick={moveToCartHandler}
           >
             Move To Cart

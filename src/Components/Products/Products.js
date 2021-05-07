@@ -35,7 +35,7 @@ export const Products = () => {
 
   return (
     <div>
-      {state.products.length > 0 ? (
+      {products.length > 0 ? (
         <div>
           <div>
             <span className="text">Sort using price :</span>

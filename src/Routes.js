@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import {
   WishList,
   Products,
@@ -28,5 +28,9 @@ export const RouterComponent = () => {
   );
 };
 const RouteNotFound = () => {
-  return <Navigate replace to="/" />;
+  return (
+    <>
+      <h3>Page Not Found</h3>
+    </>
+  );
 };

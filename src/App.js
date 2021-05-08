@@ -28,7 +28,7 @@ const App = () => {
       (async () => {
         try {
           const { data } = await axios.get(
-            `https://ecom-backend-deploy.herokuapp.com/api/cart`
+            `${process.env.REACT_APP_BACKEND_API}cart`
           );
           dispatch({
             type: Actions.SET_CART_DATA,
@@ -45,7 +45,7 @@ const App = () => {
       (async () => {
         try {
           const { data } = await axios.get(
-            `https://ecom-backend-deploy.herokuapp.com/api/wishlist`
+            `${process.env.REACT_APP_BACKEND_API}wishlist`
           );
           dispatch({
             type: Actions.SET_WISHLIST_DATA,
@@ -61,7 +61,7 @@ const App = () => {
     (async () => {
       try {
         const { data } = await axios.get(
-          "https://ecom-backend-deploy.herokuapp.com/api/categories"
+          `${process.env.REACT_APP_BACKEND_API}categories`
         );
         dispatch({
           type: Actions.SET_CATEGORIES_DATA,

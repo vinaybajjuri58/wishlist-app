@@ -1,7 +1,7 @@
 import axios from "axios";
 export const updateQuantity = async ({ productId, quantity }) => {
   const response = await axios.post(
-    `https://ecom-backend-deploy.herokuapp.com/api/cart/${productId}`,
+    `${process.env.REACT_APP_BACKEND_API}cart/${productId}`,
     {
       quantity: quantity,
     }
@@ -11,20 +11,17 @@ export const updateQuantity = async ({ productId, quantity }) => {
 export const moveToWish = async ({ productId }) => {
   const {
     data: { wishlistItem },
-  } = await axios.post(
-    "https://ecom-backend-deploy.herokuapp.com/api/wishlist",
-    {
-      _id: productId,
-    }
-  );
+  } = await axios.post(`${process.env.REACT_APP_BACKEND_API}wishlist`, {
+    _id: productId,
+  });
   const removedResponse = await axios.delete(
-    `https://ecom-backend-deploy.herokuapp.com/api/cart/${wishlistItem._id}`
+    `${process.env.REACT_APP_BACKEND_API}cart/${wishlistItem._id}`
   );
   return removedResponse;
 };
 export const removeCartItem = async ({ productId }) => {
   const response = await axios.delete(
-    `https://ecom-backend-deploy.herokuapp.com/api/cart/${productId}`
+    `${process.env.REACT_APP_BACKEND_API}cart/${productId}`
   );
   return response;
 };

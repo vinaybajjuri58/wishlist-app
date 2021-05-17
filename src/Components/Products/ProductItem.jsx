@@ -19,23 +19,34 @@ export const ProductItem = ({ product }) => {
     checkLoggedInHandler({callback : async () => {
       setToast("true");
       setToastMessage(`${product.name} is being added to wishlist`);
-      const {data:{wishlistItem}} = await addToWish({productId:product._id});
+      const {data:{wishlistItem,success}} = await addToWish({productId:product._id});
+      if(success===true){
       setToast("true");
       setToastMessage(`${product.name} is added to wishlist`);
-      dispatch({ type: Actions.ADD_TO_WISHLIST, payload: wishlistItem._id });
+      dispatch({ type: Actions.ADD_TO_WISHLIST, payload: wishlistItem._id });}
+      else{
+        setToast(true);
+        setToastMessage("Error occured idding product to wish");
+      }
   }})
 }
   const removeFromWishlistHandler = ()=>{
     checkLoggedInHandler({callback: async() => {
       setToast("true");
       setToastMessage(`${product.name} being removed from  wishlist`);
-      const {data:{wishlistItem}} = await removeWishItem({productId:product._id});
-      setToast("true");
+      const {data:{wishlistItem,success}} = await removeWishItem({productId:product._id});
+      if(success===true){
+        setToast("true");
       setToastMessage(`${product.name} removed from  wishlist`);
       dispatch({
         type: Actions.REMOVE_FROM_WISHLIST,
         payload: wishlistItem._id,
       });
+    }
+    else{
+      setToastMessage("Error in removing from wish");
+      setToast(true)
+    }
     }})
   }
   const addToCartHandler = ()=>{

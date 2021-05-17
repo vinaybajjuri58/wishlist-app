@@ -1,43 +1,42 @@
 import { useData, Actions } from "../../Context";
-import {removeCartItem,moveToWish,updateQuantity} from "./serverCalls"
-import {inWishProducts} from "../utils"
+import {removeCartItem,updateQuantity,moveToWish} from "./serverCalls"
+import {inWishProducts} from "../utils";
+import {Link} from "react-router-dom"
 export const CartItem = ({ product }) => {
   const {state, dispatch, setToast, setToastMessage } = useData();
   const removeCartItemHandler = async () => {
       setToast("true");
       setToastMessage(`${product.name} is being removed from Cart`);
-      const {data:{cartItem}} = await removeCartItem({productId:product._id});
+     const {data:{cartItem,success}} = await removeCartItem({productId:product._id});
+     if(success===true){
       setToast("true");
-      setToastMessage(`${product.name} is being removed from Cart`);
-      dispatch({ type: Actions.REMOVE_FROM_CART, payload: cartItem._id });
+      setToastMessage(`${product.name} removed from Cart`);
+      dispatch({ type: Actions.REMOVE_FROM_CART, payload: cartItem._id });}
+      else{
+        setToast("true");
+      setToastMessage(`error in removing cart item`);
+      }
   }
   const moveToWishHandler =async () => {
-    if(inWishProducts({id:product._id,wishItems:state.wishProducts})){
-      const {data:{cartItem,success}} = await removeCartItem({productId:product._id});
-      if(success){
+    setToast(true);
+    setToastMessage(`${product.name} is being moved to wish`)
+      const {data:{wishlistItem,success}} = await moveToWish({productId:product._id});
+      if(success===true){
         setToast("true");
-        setToastMessage(`${product.name} removed from cart`);
+        setToastMessage(`${product.name} moved to wish`);
+        dispatch({
+          type: Actions.ADD_TO_WISHLIST,
+          payload: wishlistItem._id,
+        });
         dispatch({
           type: Actions.REMOVE_FROM_CART,
-          payload: cartItem._id,
+          payload: wishlistItem._id,
         });
       }
       else{
         setToast("false");
-        setToastMessage("Error occured in removing product")
+        setToastMessage("Error occured in moving product to wish")
       }
-    }
-    else{
-      setToast("true");
-      setToastMessage(`${product.name} being moved to wish`);
-      const {data:{cartItem}} = await moveToWish({productId:product._id});
-      setToast("true");
-      setToastMessage(`${product.name} moved to wish`);
-      dispatch({
-        type: Actions.MOVE_TO_WISHLIST_FROM_CART,
-        payload: { id: cartItem._id, count: product.count },
-      });
-    }
   }
   const increaseQuantityHandler = async() => {
     const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity+1});
@@ -54,7 +53,6 @@ export const CartItem = ({ product }) => {
     });
   }
   return (
-    // <div className="wish-product">
       <div className="card-horizontal card-horizontal-shape">
         <div className="card-content-img" >
         <img src={product.imageUrl} alt="" className="card-img" />
@@ -69,12 +67,19 @@ export const CartItem = ({ product }) => {
           >
             <i class="fas fa-trash-alt"></i>
           </button>
-          <button
+          {inWishProducts({id:product._id,wishItems:state.wishProducts}) ?(<Link to="/wishlist"
+          ><button
+            className="button button-primary card-action "
+          >
+            Go To Wish
+          </button></Link>):(
+            <button
             className="button button-primary card-action "
             onClick={moveToWishHandler}
           >
             Move To Wish
           </button>
+          )}
           <div
           style={{
             display: "flex",
@@ -97,7 +102,6 @@ export const CartItem = ({ product }) => {
         </div>
         </div>
       </div>
-    // </div>
   );
 };
 

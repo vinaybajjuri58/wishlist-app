@@ -6,6 +6,7 @@ import {
   LoginPage,
   Main,
   Product,
+  SignupPage,
 } from "./Components";
 import { PrivateRoute } from "./PrivateRoute";
 export const RouterComponent = () => {
@@ -22,6 +23,7 @@ export const RouterComponent = () => {
         <PrivateRoute path="/wishlist" element={<WishList />} />
         <PrivateRoute path="/cart" element={<Cart />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="*" element={<RouteNotFound />} />
       </Routes>
     </div>

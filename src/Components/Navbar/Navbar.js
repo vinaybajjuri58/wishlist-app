@@ -1,11 +1,20 @@
 import { Link } from "react-router-dom";
-import { useData, useAuth, AuthActionTypes } from "../../Context";
+import { useData, useAuth, AuthActionTypes, Actions } from "../../Context";
 export const Navbar = () => {
-  const { state } = useData();
+  const { state, dispatch } = useData();
   const { authState, authDispatch } = useAuth();
   const logoutHandler = () => {
+    localStorage?.removeItem("login");
     authDispatch({
       type: AuthActionTypes.SET_LOGOUT,
+    });
+    dispatch({
+      type: Actions.SET_WISHLIST_DATA,
+      payload: [],
+    });
+    dispatch({
+      type: Actions.SET_CART_DATA,
+      payload: [],
     });
   };
   return (

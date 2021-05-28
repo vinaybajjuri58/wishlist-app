@@ -1,26 +1,27 @@
-import { useData, Actions } from "../../Context";
+import { useData,useAuth, Actions } from "../../Context";
 import {removeCartItem,updateQuantity,moveToWish} from "./serverCalls"
 import {inWishProducts} from "../utils";
 import {Link} from "react-router-dom"
 export const CartItem = ({ product }) => {
   const {state, dispatch, setToast, setToastMessage } = useData();
+  const {authState:{userToken}} = useAuth()
   const removeCartItemHandler = async () => {
       setToast("true");
       setToastMessage(`${product.name} is being removed from Cart`);
-     const {data:{cartItem,success}} = await removeCartItem({productId:product._id});
+     const {data:{cartItem,success}} = await removeCartItem({productId:product._id,token:userToken});
      if(success===true){
-      setToast("true");
-      setToastMessage(`${product.name} removed from Cart`);
-      dispatch({ type: Actions.REMOVE_FROM_CART, payload: cartItem._id });}
+        setToast("true");
+        setToastMessage(`${product.name} removed from Cart`);
+        dispatch({ type: Actions.REMOVE_FROM_CART, payload: cartItem._id });}
       else{
         setToast("true");
-      setToastMessage(`error in removing cart item`);
+        setToastMessage(`error in removing cart item`);
       }
   }
   const moveToWishHandler =async () => {
     setToast(true);
     setToastMessage(`${product.name} is being moved to wish`)
-      const {data:{wishlistItem,success}} = await moveToWish({productId:product._id});
+      const {data:{wishlistItem,success}} = await moveToWish({productId:product._id,token:userToken});
       if(success===true){
         setToast("true");
         setToastMessage(`${product.name} moved to wish`);
@@ -39,14 +40,14 @@ export const CartItem = ({ product }) => {
       }
   }
   const increaseQuantityHandler = async() => {
-    const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity+1});
+    const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity+1,token:userToken});
     dispatch({
       type: Actions.INCREASE_ITEM_IN_CART,
       payload: cartItem._id,
     });
   }
   const decreaseQuantityHandler = async() => {
-    const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity-1});
+    const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity-1,token:userToken});
     dispatch({
       type: Actions.DECREASE_ITEM_IN_CART,
       payload: cartItem._id,

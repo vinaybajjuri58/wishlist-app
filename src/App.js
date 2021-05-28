@@ -7,7 +7,9 @@ import { useEffect } from "react";
 
 const App = () => {
   const { toast, dispatch } = useData();
-  const { authState } = useAuth();
+  const {
+    authState: { isLoggedIn, userToken },
+  } = useAuth();
   useEffect(() => {
     (async () => {
       try {
@@ -24,11 +26,16 @@ const App = () => {
     })();
   }, [dispatch]);
   useEffect(() => {
-    if (authState.isLoggedIn) {
+    if (isLoggedIn) {
       (async () => {
         try {
           const { data } = await axios.get(
-            `${process.env.REACT_APP_BACKEND_API}cart`
+            `${process.env.REACT_APP_BACKEND_API}cart`,
+            {
+              headers: {
+                authorization: userToken,
+              },
+            }
           );
           dispatch({
             type: Actions.SET_CART_DATA,
@@ -39,13 +46,18 @@ const App = () => {
         }
       })();
     }
-  }, [dispatch, authState]);
+  }, [dispatch, userToken, isLoggedIn]);
   useEffect(() => {
-    if (authState.isLoggedIn) {
+    if (isLoggedIn) {
       (async () => {
         try {
           const { data } = await axios.get(
-            `${process.env.REACT_APP_BACKEND_API}wishlist`
+            `${process.env.REACT_APP_BACKEND_API}wishlist`,
+            {
+              headers: {
+                authorization: userToken,
+              },
+            }
           );
           dispatch({
             type: Actions.SET_WISHLIST_DATA,
@@ -56,7 +68,7 @@ const App = () => {
         }
       })();
     }
-  }, [dispatch, authState]);
+  }, [dispatch, isLoggedIn, userToken]);
   useEffect(() => {
     (async () => {
       try {

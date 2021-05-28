@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useData, useAuth, AuthActionTypes } from "../Context";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { loginUserHandler } from "./serverCalls";
 const initialState = {
   email: "",
   password: "",
@@ -17,13 +18,21 @@ export const LoginPage = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  const loginHandler = () => {
-    if (
-      loginDetails.email === "neog@gmail.com" &&
-      loginDetails.password === "neog123"
-    ) {
+  const loginHandler = async () => {
+    const data = await loginUserHandler({
+      email: loginDetails.email,
+      password: loginDetails.password,
+    });
+    if (data.success === true) {
+      localStorage?.setItem(
+        "login",
+        JSON.stringify({ isLoggedIn: true, userToken: data.token })
+      );
       authDispatch({
         type: AuthActionTypes.SET_LOGGED_IN,
+        payload: {
+          token: data.token,
+        },
       });
       navigate(state?.from ? state.from : "/");
       setToastMessage("Logged In Successfully");
@@ -64,11 +73,9 @@ export const LoginPage = () => {
           Login
         </button>
       </div>
-      <div>
-        <h4>Login Details</h4>
-        <p>Email: neog@gmail.com</p>
-        <p>Password : neog123</p>
-      </div>
+      <button className="button button-primary">
+        <Link to="/signup">Signup</Link>
+      </button>
     </div>
   );
 };

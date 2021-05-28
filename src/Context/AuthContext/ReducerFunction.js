@@ -5,11 +5,13 @@ export const reducerFunction = (state, action) => {
       return {
         ...state,
         isLoggedIn: true,
+        userToken: action.payload.token,
       };
     case AuthActions.SET_LOGOUT:
       return {
         ...state,
         isLoggedIn: false,
+        userToken: null,
       };
     default:
       return state;

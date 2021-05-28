@@ -1,17 +1,12 @@
-import axios from "axios";
-import { addToCart } from "../Products/serverCalls";
-export const removeWishItem = async ({ productId }) => {
-  const response = await axios.delete(
-    `${process.env.REACT_APP_BACKEND_API}wishlist/${productId}`
-  );
-  return response;
-};
-export const moveToCart = async ({ productId }) => {
+// import axios from "axios";
+import { addToCart, removeWishItem } from "../Products/serverCalls";
+
+export const moveToCart = async ({ productId, token }) => {
   const {
     data: { success },
-  } = await removeWishItem({ productId });
+  } = await removeWishItem({ productId, token });
   if (success) {
-    const response = await addToCart({ productId });
+    const response = await addToCart({ productId, token });
     return response;
   } else {
     return {

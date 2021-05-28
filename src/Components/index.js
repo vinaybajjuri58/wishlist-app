@@ -5,3 +5,4 @@ export { Cart } from "./Cart";
 export { LoginPage } from "./LoginPage";
 export { Main } from "./MainPage";
 export { Product } from "./ProductListing";
+export { SignupPage } from "./SignupPage";

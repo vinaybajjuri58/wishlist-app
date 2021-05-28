@@ -1,32 +1,33 @@
-import { useData, Actions } from "../../Context";
+import { useData,useAuth, Actions } from "../../Context";
 import {removeWishItem} from "../Products/serverCalls"
 import {moveToCart} from "./serverCalls"
 import {inCartProducts} from "../utils"
 import { Link } from "react-router-dom";
 export const WishListItem = ({ product }) => {
     const { state,dispatch, setToast, setToastMessage } = useData();
+    const {authState:{userToken}} = useAuth();
     const removeWishlistItemHandler = async() => {
       setToast("true");
       setToastMessage(`${product.name} being removed from  wishlist`);
-      const {data:{wishlistItem,success}} = await removeWishItem({productId:product._id});
+      const {data:{wishlistItem,success}} = await removeWishItem({productId:product._id , token:userToken});
       if(success===true){
         setToast("true");
-      setToastMessage(`${product.name} removed from  wishlist`);
-      dispatch({
-        type: Actions.REMOVE_FROM_WISHLIST,
-        payload: wishlistItem._id,
-      });
-    }
-    else{
-      setToastMessage("Error in removing from wish");
-      setToast(true)
-    }
+        setToastMessage(`${product.name} removed from  wishlist`);
+        dispatch({
+          type: Actions.REMOVE_FROM_WISHLIST,
+          payload: wishlistItem._id,
+        });
+      }
+      else{
+        setToastMessage("Error in removing from wish");
+        setToast(true)
+      }
     }
 
     const moveToCartHandler = async () => {
       setToast("true");
       setToastMessage(`${product.name} is being added to Cart`);
-        const {data:{cartItem,success}} =  await moveToCart({productId:product._id});
+        const {data:{cartItem,success}} =  await moveToCart({productId:product._id,token:userToken});
         if(success===true){
           setToast("true");
           setToastMessage(`${product.name} moved to cart`);

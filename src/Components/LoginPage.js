@@ -24,9 +24,14 @@ export const LoginPage = () => {
       password: loginDetails.password,
     });
     if (data.success === true) {
+      const loginTime = new Date().getTime();
       localStorage?.setItem(
         "login",
-        JSON.stringify({ isLoggedIn: true, userToken: data.token })
+        JSON.stringify({
+          isLoggedIn: true,
+          userToken: data.token,
+          expiry: loginTime + 64800000,
+        })
       );
       authDispatch({
         type: AuthActionTypes.SET_LOGGED_IN,

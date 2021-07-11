@@ -162,6 +162,15 @@ nav {
 .input-styled {
   width: 220px;
 }
+.label-tags{
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+.filter-heading{
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
 
 @media only screen and (max-width: 600px) {
   .products-list {

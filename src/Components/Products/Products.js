@@ -16,15 +16,13 @@ export const Products = ({ allproducts }) => {
       ? state.products.filter((product) => product.category === categoryId)
       : state.products;
 
-  const [
-    { sortBy, fastDelivery, inStock, searchText },
-    filterDispatch,
-  ] = useReducer(dispatchFunc, {
-    sortBy: null,
-    fastDelivery: false,
-    inStock: false,
-    searchText: "",
-  });
+  const [{ sortBy, fastDelivery, inStock, searchText }, filterDispatch] =
+    useReducer(dispatchFunc, {
+      sortBy: null,
+      fastDelivery: false,
+      inStock: false,
+      searchText: "",
+    });
 
   const sortedData = sortData(products, sortBy);
   const filteredData = filterData(sortedData, fastDelivery, inStock);
@@ -40,7 +38,7 @@ export const Products = ({ allproducts }) => {
         <div className="products-listing-page">
           <div className="filters-container">
             <div className="search-container">
-              <label>
+              <label className="label-tags">
                 Search :
                 <div>
                   <input
@@ -54,9 +52,9 @@ export const Products = ({ allproducts }) => {
               </label>
             </div>
             <div>
-              <span className="text">Sort using price :</span>
+              <span className="text filter-heading">Sort using price :</span>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <label>
+                <label className="label-tags">
                   <input
                     type="radio"
                     name="sort"
@@ -70,7 +68,7 @@ export const Products = ({ allproducts }) => {
                   />
                   LOW TO HIGH
                 </label>
-                <label>
+                <label className="label-tags">
                   <input
                     type="radio"
                     name="sort"
@@ -87,9 +85,9 @@ export const Products = ({ allproducts }) => {
               </div>
             </div>
             <div>
-              <span className="text">Filters : </span>
+              <span className="text filter-heading">Filters : </span>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <label>
+                <label className="label-tags">
                   <input
                     type="checkbox"
                     name="Filter Delivery"
@@ -100,7 +98,7 @@ export const Products = ({ allproducts }) => {
                   />
                   Fast Delivery
                 </label>
-                <label>
+                <label className="label-tags">
                   <input
                     type="checkbox"
                     name="Filter inStock"

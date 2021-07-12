@@ -48,6 +48,9 @@ export const CartItem = ({ product }) => {
   }
   const decreaseQuantityHandler = async() => {
     const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity-1,token:userToken});
+    if(product.quantity===1){
+      dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id })
+    }
     dispatch({
       type: Actions.DECREASE_ITEM_IN_CART,
       payload: cartItem._id,

@@ -197,9 +197,13 @@ function increaseItem({ id, Items }) {
   );
 }
 function removeOneItem({ id, Items }) {
-  let allItems = Items.map((item) =>
-    item._id === id ? { ...item, quantity: item.quantity - 1 } : { ...item }
-  );
-
-  return allItems.filter((item) => item.quantity > 0);
+  let allItems = Items.map((item) => {
+    if (item._id === id) {
+      return { ...item, quantity: item.quantity === 1 ? 0 : item.quantity - 1 };
+    } else {
+      return { ...item };
+    }
+  });
+  const newCartItems = allItems.filter((item) => item.quantity > 0);
+  return newCartItems;
 }

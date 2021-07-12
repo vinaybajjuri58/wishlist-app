@@ -9,7 +9,7 @@ export const Cart = () => {
   }, []);
 
   return (
-    <div>
+    <div className="products-list">
       {state.cartProducts.length > 0 ? (
         <DisplayProducts />
       ) : (

@@ -40,14 +40,22 @@ export const CartItem = ({ product }) => {
       }
   }
   const increaseQuantityHandler = async() => {
+    setToast("true");
+    setToastMessage(`Updating Quantity`);
     const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity+1,token:userToken});
+    setToast("true");
+    setToastMessage(`Updated Quantity`);
     dispatch({
       type: Actions.INCREASE_ITEM_IN_CART,
       payload: cartItem._id,
     });
   }
   const decreaseQuantityHandler = async() => {
+    setToast("true");
+    setToastMessage(`Updating Quantity`);
     const {data:{cartItem}} = await updateQuantity({productId:product._id,quantity:product.quantity-1,token:userToken});
+    setToast("true");
+    setToastMessage(`Updated Quantity`);
     if(product.quantity===1){
       dispatch({ type: Actions.REMOVE_FROM_CART, payload: product._id })
     }

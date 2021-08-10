@@ -1,42 +1,51 @@
-import { useState } from "react";
 import { useData, useAuth, AuthActionTypes } from "../Context";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { loginUserHandler } from "./serverCalls";
-const initialState = {
-  email: "",
-  password: "",
-};
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().required().min(6),
+});
+
 export const LoginPage = () => {
-  const [loginDetails, setLoginDetails] = useState(initialState);
   const { authDispatch } = useAuth();
   const { setToast, setToastMessage } = useData();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const handleChange = (e) => {
-    setLoginDetails((initialData) => ({
-      ...initialData,
-      [e.target.name]: e.target.value,
-    }));
-  };
-  const loginHandler = async () => {
-    const data = await loginUserHandler({
-      email: loginDetails.email,
-      password: loginDetails.password,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "vinay5@gmail.com",
+      password: "123456789",
+    },
+  });
+
+  const loginHandler = async (data) => {
+    const response = await loginUserHandler({
+      email: data.email,
+      password: data.password,
     });
-    if (data.success === true) {
+    if (response.success === true) {
       const loginTime = new Date().getTime();
       localStorage?.setItem(
         "login",
         JSON.stringify({
           isLoggedIn: true,
-          userToken: data.token,
+          userToken: response.token,
           expiry: loginTime + 64800000,
         })
       );
       authDispatch({
         type: AuthActionTypes.SET_LOGGED_IN,
         payload: {
-          token: data.token,
+          token: response.token,
         },
       });
       navigate(state?.from ? state.from : "/");
@@ -47,40 +56,40 @@ export const LoginPage = () => {
       setToast("true");
     }
   };
+
   return (
     <div className="div-flex-center">
       <h2> Login Page </h2>
       <div className="login-div-container">
-        <label>
-          <p>Email : </p>
+        <form onSubmit={handleSubmit(loginHandler)}>
+          <label>
+            <p>Email : </p>
+          </label>
           <input
             className="input-styled"
-            name="email"
-            value={loginDetails.email}
             type="text"
-            onChange={handleChange}
+            name="email"
+            {...register("email")}
           />
-        </label>
-        <label>
-          <p>Password : </p>
+          <p className="error-text">{errors.email?.message}</p>
+          <label>
+            <p>Password : </p>
+          </label>
           <input
             className="input-styled"
-            name="password"
-            value={loginDetails.password}
             type="password"
-            onChange={handleChange}
+            name="password"
+            {...register("password")}
           />
-        </label>
-        <button
-          onClick={loginHandler}
-          className="button button-border border-primary"
-        >
-          Login
-        </button>
+          <p className="error-text">{errors.password?.message}</p>
+          <button type="submit" className="button button-border border-primary">
+            Login
+          </button>
+        </form>
       </div>
-      <button className="button button-primary">
-        <Link to="/signup">Signup</Link>
-      </button>
+      <Link to="/signup">
+        <button className="button button-primary">Signup</button>
+      </Link>
     </div>
   );
 };

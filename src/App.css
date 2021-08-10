@@ -171,6 +171,9 @@ nav {
   font-weight: 600;
   text-transform: uppercase;
 }
+.error-text{
+  color: #FF4500;
+}
 
 @media only screen and (max-width: 600px) {
   .products-list {
